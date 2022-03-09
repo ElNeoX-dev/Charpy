@@ -1,8 +1,18 @@
 Listes des classes :
 Matériau (résilience, couleur, flexible)
 Pendule (longueur du pendule, masse du pendule)
+Eprouvette(Matériau, section)
 Fenêtre (JFrame)
 
 
 Les imports : javax.swing.*, java.awt.*, java.awt.event.*, java.awt.color
+
+Méthodes :
+Fenetre
+-Lancement
+-testCollision/testEprouvette
+-majEnergie (surcharge su constructeur)
+
+
+
 
