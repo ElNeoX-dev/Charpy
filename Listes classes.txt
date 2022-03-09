@@ -13,6 +13,9 @@ Fenetre
 -testCollision/testEprouvette
 -majEnergie (surcharge su constructeur)
 
+Pendule 
+-pendule(masse,longueur,angleInitial,vitesseInitiale)
+
 
 
 
