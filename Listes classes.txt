@@ -1,0 +1,8 @@
+Listes des classes :
+Matériau (résilience, couleur, flexible)
+Pendule (longueur du pendule, masse du pendule)
+Fenêtre (JFrame)
+
+
+Les imports : javax.swing.*, java.awt.*, java.awt.event.*, java.awt.color
+
