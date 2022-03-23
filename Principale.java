@@ -11,10 +11,9 @@ public class Principale {
         maListeMateriau.add(new Materiau("Acier S22", 70, new Color(133, 133, 173)));
     }
 
-    // méthode qui crée une éprouvette : 
-    public void creationEprouvette (Materiau unMateriau, double section) {
-        
-    }
+    
+
+    
 
     
 }
