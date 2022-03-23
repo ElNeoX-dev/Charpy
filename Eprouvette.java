@@ -1,12 +1,14 @@
 public class Eprouvette {
     // ATTRIBUTS
-    Materiau Materiau;
+    Materiau unMateriau;
     double Section;
 
     public Eprouvette (Materiau unMateriau, double uneSection) {
-        Materiau=unMateriau;
+        this.unMateriau=unMateriau;
         Section=uneSection;
     }
-
     
+    public String toString(){
+		return ("Eprouvette en "+unMateriau.Nom+" de section: "+Section+"mm");
+	}
 }
