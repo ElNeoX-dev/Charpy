@@ -7,4 +7,6 @@ public class Eprouvette {
         Materiau=unMateriau;
         Section=uneSection;
     }
+
+    
 }

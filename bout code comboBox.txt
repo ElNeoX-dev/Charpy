@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+
 import java.awt.*;
 
 public class Principale {
@@ -11,9 +11,21 @@ public class Principale {
         maListeMateriau.add(new Materiau("Acier S22", 70, new Color(133, 133, 173)));
     }
 
-    
-
-    
 
     
 }
+
+
+
+String [] listeMat= new String[maListeMateriau.getSize()];
+for(int i=0; i<listeMat.length; i++){
+	listeMat[i]=maListeMateriau.get(i).nom;
+}
+
+choixMat = new JComboBox<String>(listeMat);
+
+//à rajouter dans le actionPerformed
+
+int i=choixMat.getSelectedIndex();
+
+eprouvette= new Eprouvette(listeMat.get(i), double section);
