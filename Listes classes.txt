@@ -6,6 +6,7 @@ Fenêtre (JFrame)
 
 
 Les imports : javax.swing.*, java.awt.*, java.awt.event.*, java.awt.color
+LinkedList de matériaux
 
 Méthodes :
 Fenetre
