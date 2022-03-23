@@ -1,3 +1,0 @@
-Arraylist<Materiau> maListeMateriau = new Arraylist<Materiau>();
-
-maListeMateriau.add(new Materiau("Acier S235", 70, new Color(133, 133, 173)); 
