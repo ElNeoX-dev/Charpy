@@ -14,6 +14,7 @@ public class Pendule {
     int centreY;
     int finX;
     int finY;
+    int energieInitiale;
 
     
     public Pendule (int uneMasse, int uneLongueur, double unAngleInitial, int uneVitesseInitiale) {
@@ -21,6 +22,7 @@ public class Pendule {
         this.longueur=uneLongueur;
         this.angle=unAngleInitial;
         this.vitesse=uneVitesseInitiale;
+        this.energieInitiale = 1/2*masse*Math.pow(2,uneVitesseInitiale)+masse*9.81*(longueur*Math.cos(unAngleInitial));
     }
 
     public void dessine (Graphics g) {
@@ -39,4 +41,10 @@ public class Pendule {
 
         
      }
+
+     public void getVitesse () {
+        int energieCinetique = energieInitiale-(9.81*masse*longueur*Math.cos(angle));
+        int vitesseAngulaire = Math.sqrt(2*energieCinetique/masse)/longueur;
+     }
+     
 }
