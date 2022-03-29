@@ -21,11 +21,9 @@ public class FenetreAffichage extends JFrame implements ActionListener {
 
     public void ActionPerformed(ActionEvent e) {
         if(e.getSource() == chrono) {
-
+            
         }
     }
 
-    public void paint(Graphics g) {
-        
-    }
+
 }

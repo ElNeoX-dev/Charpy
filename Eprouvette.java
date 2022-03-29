@@ -1,14 +1,26 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class Eprouvette {
     // ATTRIBUTS
     Materiau unMateriau;
-    double Section;
+    double section;
+
+    public Eprouvette() {
+        section = 100;
+    }
 
     public Eprouvette (Materiau unMateriau, double uneSection) {
         this.unMateriau=unMateriau;
-        Section=uneSection;
+        section=uneSection;
     }
     
     public String toString(){
-		return ("Eprouvette en "+unMateriau.Nom+" de section: "+Section+"mm");
+		return ("Eprouvette en "+unMateriau.Nom+" de section: "+section+"mm");
 	}
+
+    public void dessine(Graphics g) {
+        g.setColor(Color.green);
+        g.drawRect(600, 500, 50, 50);
+    }
 }

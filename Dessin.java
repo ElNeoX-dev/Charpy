@@ -13,8 +13,13 @@ public class Dessin extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
-        pendule.dessine();
-        eprou.dessine();
-        g.fillRect(750, 750, 50, 100);
+        pendule.dessine(g);
+        eprou.dessine(g);
+ 
+        //g.fillRect(750, 750, 50, 100);
+    }
+
+    public void maj(Pendule p, Eprouvette e) {
+        
     }
 }
