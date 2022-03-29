@@ -1,12 +1,12 @@
 Listes des classes :
-Matériau (résilience, couleur, flexible)
+Matériau (unNom, uneResilience, uneCouleur)
 Pendule (longueur du pendule, masse du pendule)
 Eprouvette(Matériau, section)
 Fenêtre (JFrame)
+Main
 
 
 Les imports : javax.swing.*, java.awt.*, java.awt.event.*, java.awt.color
-LinkedList de matériaux
 
 Méthodes :
 Fenetre
@@ -18,5 +18,8 @@ Pendule
 -pendule(masse,longueur,angleInitial,vitesseInitiale)
 
 
-
-
+-Attributs : 
+(Materiau)
+String unNom
+double uneResilience
+Color uneCouleur
