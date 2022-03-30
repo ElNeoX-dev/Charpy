@@ -20,6 +20,7 @@ public class Dessin extends JPanel {
     }
 
     public void maj(Pendule p, Eprouvette e) {
-        
+        this.pendule = p;
+        this.eprou = e;
     }
 }

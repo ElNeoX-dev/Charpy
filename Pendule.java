@@ -14,7 +14,7 @@ public class Pendule {
     int centreY;
     int finX;
     int finY;
-    int energieInitiale;
+    double energieInitiale;
 
     
     public Pendule (int uneMasse, int uneLongueur, double unAngleInitial, int uneVitesseInitiale) {
@@ -43,8 +43,12 @@ public class Pendule {
      }
 
      public void getVitesse () {
-        int energieCinetique = energieInitiale-(9.81*masse*longueur*Math.cos(angle));
-        int vitesseAngulaire = Math.sqrt(2*energieCinetique/masse)/longueur;
+        double energieCinetique = energieInitiale-(9.81*masse*longueur*Math.cos(angle));
+        double vitesseAngulaire = Math.sqrt(2*energieCinetique/masse)/longueur;
+     }
+
+     public String toString() {
+         return(longueur + " " + angle);
      }
      
 }

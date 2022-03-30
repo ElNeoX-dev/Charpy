@@ -4,11 +4,11 @@ import java.awt.Graphics;
 import java.awt.event.*;
 import javax.swing.Timer;
 
-public class FenetreAffichage extends JFrame implements ActionListener {
+public class Fichiertestpastoucher extends JFrame implements ActionListener {
 
     
     private Timer chrono;
-    public FenetreAffichage() {
+    public Fichiertestpastoucher() {
         super("Affichage des courbes");
 		setSize(1800, 1000);
 		setLocation(0, 0);
@@ -19,7 +19,7 @@ public class FenetreAffichage extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    public void ActionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
         if(e.getSource() == chrono) {
             
         }

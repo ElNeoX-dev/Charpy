@@ -27,7 +27,7 @@ public class Fenetre extends JFrame implements ActionListener {
     private Pendule p;
     private Eprouvette ep;
     private Timer chrono;
-    public JButton majaff;
+    public JButton majPendule;
     public JButton lancement;
 
     public Fenetre(Pendule p, Eprouvette e) {
@@ -62,15 +62,23 @@ public class Fenetre extends JFrame implements ActionListener {
         this.add(monConteneurMain);
 
         // boutons
-        lancement = new JButton("Lancer l'animation");
-        lancement.setBounds(75, 180, 150, 40);
+        lancement = new JButton("Lancer");
+        lancement.setBounds(20, 180, 120, 40);
         lancement.setBackground(Color.red);
         lancement.addActionListener(this);
         monConteneur1.add(lancement);
 
+        // boutons de maj de l'affichage
+        majPendule = new JButton("maj l'affichage");
+        majPendule.setBounds(150, 180, 120, 40);
+        majPendule.setBackground(Color.red);
+        majPendule.addActionListener(this);
+        monConteneur1.add(majPendule);
+        
+
         // TextField + étiquettes
         monEtiquette1 = new JLabel();
-        monEtiquette1.setText("affichage résultat");
+        monEtiquette1.setText("Affichage résultat");
         monEtiquette1.setBounds(75, 20, 260, 30);
         monConteneur1.add(monEtiquette1);
 
@@ -92,7 +100,7 @@ public class Fenetre extends JFrame implements ActionListener {
 
 
         monEtiquette3 = new JLabel();
-        monEtiquette3.setText("taille tige");
+        monEtiquette3.setText("Taille tige");
         monEtiquette3.setBounds(160, 240, 120, 30);
         monConteneur1.add(monEtiquette3);
 
@@ -103,7 +111,7 @@ public class Fenetre extends JFrame implements ActionListener {
 
 
         monEtiquette4 = new JLabel();
-        monEtiquette4.setText("hauteur départ");
+        monEtiquette4.setText("Angle initial");
         monEtiquette4.setBounds(20, 360, 120, 30);
         monConteneur1.add(monEtiquette4);
 
@@ -152,12 +160,17 @@ public class Fenetre extends JFrame implements ActionListener {
         if(e.getSource() == chrono) {
             repaint();
         }
+
         if(e.getSource() == lancement) {
+
+        }
+
+        if(e.getSource() == majPendule) {
             this.p = new Pendule(Integer.parseInt(monChamps5.getText()), Integer.parseInt(monChamps3.getText()),
             Double.parseDouble(monChamps4.getText()), Integer.parseInt(monChamps6.getText()));
             monConteneur2.maj(p, ep);
-            System.out.println("eeeee");
-            repaint();
+            System.out.println(p);
+            monConteneur2.repaint();
         }
     }
 }
