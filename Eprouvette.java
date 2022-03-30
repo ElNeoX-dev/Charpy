@@ -6,16 +6,20 @@ public class Eprouvette {
     Materiau unMateriau;
     double section;
     boolean estVivant;
-    int hauteur = 500;
+    int hauteur;
+    Color couleur = Color.green;
 
     public Eprouvette() {
         section = 100;
+        hauteur = 500;
     }
 
-    public Eprouvette (Materiau unMateriau, double uneSection) {
+    public Eprouvette (Materiau unMateriau, double uneSection, int hauteur) {
         this.unMateriau=unMateriau;
         section=uneSection;
         estVivant = true;
+        this.hauteur = hauteur;
+        couleur = unMateriau.Couleur;
     }
     
     public String toString(){
@@ -23,7 +27,7 @@ public class Eprouvette {
 	}
 
     public void dessine(Graphics g) {
-        g.setColor(Color.green);
+        g.setColor(couleur);
         g.fillRect(530, 75 + hauteur, 20, 50);
     }
 }

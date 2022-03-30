@@ -52,13 +52,21 @@ public class Pendule {
      }
 
      public void majVitesse () {
-        //energieCinetique = energieInitiale-(9.81*masse*longueur*Math.cos(angle));
-        //vitesseAngulaire = Math.sqrt(2*energieCinetique/masse)/longueur;
+        energieCinetique = energieInitiale-(9.81*masse*longueurReelle*Math.cos(angle));
+        vitesseAngulaire = Math.sqrt(2*energieCinetique/masse)/longueurReelle;
         omega = 1/ (Math.sqrt(longueurReelle / 9.81) * (1 + Math.pow(angleInitial, 2) / 16));
          }
 
      public boolean testCollision(Eprouvette e) {
-        return(true);
+        if(e.estVivant) {
+            if(angle == 0) {
+                if(energieCinetique < e.unMateriau.Resilience) {
+                    
+                }
+                return(true);
+            }
+        }
+        return (false);
      }
 
      public void majPos(double temps) {

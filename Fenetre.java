@@ -198,19 +198,16 @@ public class Fenetre extends JFrame implements ActionListener {
             }
         }
 
-        if (e.getSource() == choixMat) {
-            int i = choixMat.getSelectedIndex();
-            eprouvette = new Eprouvette(maListeMateriau.get(i), 2);
-            System.out.println(eprouvette);
-        }
-
         if (e.getSource() == majPendule) {
             chrono.stop();
             this.p = new Pendule(Integer.parseInt(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
-                    Double.parseDouble(TxtAngleInitial.getText()), Integer.parseInt(TxtVinit.getText()));
+                    Double.parseDouble(TxtAngleInitial.getText()), Integer.parseInt(TxtVinit.getText()), this);
+
+            this.ep = new Eprouvette(maListeMateriau.get(choixMat.getSelectedIndex()), 2, Integer.parseInt(TxtTailleTige.getText()));                   
             this.ep.hauteur = Integer.parseInt(TxtTailleTige.getText());
             tempsMs = 0;
             monConteneur2.maj(p, ep);
+            lancement.setBackground(Color.red);
             repaint();
         }
     }
