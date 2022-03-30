@@ -58,7 +58,12 @@ public class Pendule {
          }
 
      public boolean testCollision(Eprouvette e) {
-        return(true);
+        if(e.estVivant) {
+            if(angle == 0) {
+                return(true);
+            }
+        }
+        return (false);
      }
 
      public void majPos(double temps) {
