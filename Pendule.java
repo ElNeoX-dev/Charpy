@@ -1,12 +1,15 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.function.UnaryOperator;
 
 public class Pendule {
 
     int masse;
     int longueur = 500;
+    double longueurReelle;
     int largeur = 50;
     double angle;
+    double angleInitial;
     int vitesse;
     int [] tabX = new int [8];
     int [] tabY = new int [8];
@@ -15,14 +18,20 @@ public class Pendule {
     int finX;
     int finY;
     double energieInitiale;
+    double vitesseAngulaire;
+    double energieCinetique;
+    double omega;
 
     
     public Pendule (int uneMasse, int uneLongueur, double unAngleInitial, int uneVitesseInitiale) {
-        this.masse=uneMasse;
-        this.longueur=uneLongueur;
-        this.angle=unAngleInitial;
-        this.vitesse=uneVitesseInitiale;
-        this.energieInitiale = 1/2*masse*Math.pow(2,uneVitesseInitiale)+masse*9.81*(longueur*Math.cos(unAngleInitial));
+        this.masse = uneMasse;
+        this.longueur = uneLongueur;
+        this.longueurReelle = longueur / 100.0;
+        this.angle = unAngleInitial;
+        this.vitesse = uneVitesseInitiale;
+        this.angleInitial = unAngleInitial;
+        this.energieInitiale = 1.0 /2.0 * masse * Math.pow(2,uneVitesseInitiale)+masse*9.81*(longueur*Math.cos(unAngleInitial));
+        this.energieCinetique = 1.0 / 2.0 * masse * Math.pow(2,uneVitesseInitiale);
     }
 
     public void dessine (Graphics g) {
@@ -43,15 +52,18 @@ public class Pendule {
      }
 
      public void majVitesse () {
-        double energieCinetique = energieInitiale-(9.81*masse*longueur*Math.cos(angle));
-        double vitesseAngulaire = Math.sqrt(2*energieCinetique/masse)/longueur;
-     }
+        //energieCinetique = energieInitiale-(9.81*masse*longueur*Math.cos(angle));
+        //vitesseAngulaire = Math.sqrt(2*energieCinetique/masse)/longueur;
+        omega = 1/ (Math.sqrt(longueurReelle / 9.81) * (1 + Math.pow(angleInitial, 2) / 16));
+         }
 
      public boolean testCollision(Eprouvette e) {
-         return(true);
+        return(true);
      }
 
      public void majPos(double temps) {
+        this.majVitesse();
+        angle = angleInitial * Math.exp(-0.1* omega * temps) * Math.cos(Math.sqrt(1-0.01) * omega * temps);
      }
 
      public String toString() {
