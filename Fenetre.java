@@ -204,6 +204,7 @@ public class Fenetre extends JFrame implements ActionListener {
             this.p = new Pendule(Integer.parseInt(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
                     Double.parseDouble(TxtAngleInitial.getText()), Integer.parseInt(TxtVinit.getText()));
             this.ep.hauteur = Integer.parseInt(TxtTailleTige.getText());
+            tempsMs = 0;
             monConteneur2.maj(p, ep);
             repaint();
         }
