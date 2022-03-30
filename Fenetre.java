@@ -196,7 +196,7 @@ public class Fenetre extends JFrame implements ActionListener {
         if (e.getSource() == majPendule) {
             chrono.stop();
             this.p = new Pendule(Integer.parseInt(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
-                    Double.parseDouble(TxtAngleInitial.getText()), Integer.parseInt(TxtVinit.getText()));
+                    Double.parseDouble(TxtAngleInitial.getText()), Integer.parseInt(TxtVinit.getText()), this);
 
             this.ep = new Eprouvette(maListeMateriau.get(choixMat.getSelectedIndex()), 2, Integer.parseInt(TxtTailleTige.getText()));                   
             this.ep.hauteur = Integer.parseInt(TxtTailleTige.getText());
