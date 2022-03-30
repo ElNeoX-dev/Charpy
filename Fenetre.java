@@ -37,6 +37,8 @@ public class Fenetre extends JFrame implements ActionListener {
     public Eprouvette eprouvette;
     public ArrayList<Materiau> maListeMateriau;
 
+    public JSlider CoefFrottements;
+
     public double tempsMs = 0;
 
     public Fenetre(Pendule p, Eprouvette e) {
@@ -59,7 +61,7 @@ public class Fenetre extends JFrame implements ActionListener {
             listeMat[i] = maListeMateriau.get(i).Nom;
         }
         choixMat = new JComboBox<String>(listeMat);
-        choixMat.setBounds(50, 600, 200, 50);
+        choixMat.setBounds(20, 630, 120, 50);
 
         // conteneurs
         monConteneur1 = new JPanel();
@@ -108,21 +110,16 @@ public class Fenetre extends JFrame implements ActionListener {
 
         coeffFrottements = new JLabel();
         coeffFrottements.setText("Coeff frottements");
-        coeffFrottements.setBounds(20, 240, 120, 30);
+        coeffFrottements.setBounds(90, 240, 120, 30);
         monConteneur1.add(coeffFrottements);
-
-        TxtCoefFrottements = new JTextField(""); // coeff frottements
-        TxtCoefFrottements.setBounds(20, 280, 120, 60);
-        TxtCoefFrottements.setBackground(Color.white);
-        monConteneur1.add(TxtCoefFrottements);
 
         tailleTige = new JLabel();
         tailleTige.setText("Taille tige");
-        tailleTige.setBounds(160, 240, 120, 30);
+        tailleTige.setBounds(160, 600, 120, 30);
         monConteneur1.add(tailleTige);
 
         TxtTailleTige = new JTextField(""); // taille tige
-        TxtTailleTige.setBounds(160, 280, 120, 60);
+        TxtTailleTige.setBounds(160, 640, 120, 60);
         TxtTailleTige.setBackground(Color.white);
         monConteneur1.add(TxtTailleTige);
 
@@ -168,6 +165,14 @@ public class Fenetre extends JFrame implements ActionListener {
 
         monConteneur1.add(choixMat);
         choixMat.addActionListener(this);
+
+        CoefFrottements = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
+        CoefFrottements.setBounds(20, 280, 260, 60);
+        monConteneur1.add(CoefFrottements);
+        CoefFrottements.setMajorTickSpacing(10);
+        CoefFrottements.setMinorTickSpacing(0);
+        CoefFrottements.setPaintTicks(true);
+        CoefFrottements.setPaintLabels(true);
 
         setVisible(true);
     }
