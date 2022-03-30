@@ -16,6 +16,8 @@ Méthodes :
 	-Eprouvette (Materiau unMateriau, double uneSection)
 	-String toString ()
 	-void dessine (Graphics g)
+.Fenetre : 
+	-Fenetre (
 
 
 Attributs : 
@@ -31,17 +33,27 @@ Attributs :
 	-Dessin monConteneur 2
 	-JPanel monConteneur 1
 	-JPanel monConteneurMain
-	-JTextField TxtaffichageResultat;
-      -JTextField TxtCoefFrottements;
-      -JTextField TxtTailleTige;
-      -JTextField TxtAngleInitial;
-      -JTextField TxtMasseMarteau;
-      -JTextField TxtVinit;
-      -JTextField TxtEpaisseurEprouvette;
-      -JLabel affichageResultat;
-      -JLabel coeffFrottements;
-      -JLabel tailleTige;
-      -JLabel angleInitial;
-      -JLabel masseMarteau;
-      -JLabel vitesseInitiale;       
-	-JLabel epaisseurEprouvette;
+	-JTextField TxtaffichageResultat
+      -JTextField TxtCoefFrottements
+      -JTextField TxtTailleTige
+      -JTextField TxtAngleInitial
+      -JTextField TxtMasseMarteau
+      -JTextField TxtVinit
+      -JTextField TxtEpaisseurEprouvette
+      -JLabel affichageResultat
+      -JLabel coeffFrottements
+      -JLabel tailleTige
+      -JLabel angleInitial
+      -JLabel masseMarteau
+      -JLabel vitesseInitiale       
+	-JLabel epaisseurEprouvette
+	-JButton majPendule
+	-JButton lancement
+ 	-JComboBox<String> choixMat
+	-JSlider CoefFrottements
+	-ArrayList<Materiau> maListeMateriau
+	-Pendule p
+	-Eprouvette e1
+	-Eprouvette e2 
+	-Timer t
+	-double temps
