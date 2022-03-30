@@ -41,14 +41,14 @@ public class Fenetre extends JFrame implements ActionListener {
 
     public double tempsMs = 0;
 
-    public Fenetre(Pendule p, Eprouvette e) {
+    public Fenetre() {
         super("Affichage des courbes");
         setSize(1800, 1000);
         setLocation(0, 0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.p = p;
-        this.ep = e;
+        this.p = new Pendule(1, 500, 0, 0, this);
+        this.ep = new Eprouvette();
         chrono = new Timer(15, this);
 
         maListeMateriau = new ArrayList<Materiau>();
@@ -177,6 +177,14 @@ public class Fenetre extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    public Timer getChrono() {
+        return(chrono);
+    }
+
+    public void setTemps(double t) {
+        tempsMs = t;
+    }
+
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == chrono && lancement.getBackground() == Color.green) {
             tempsMs += chrono.getDelay() / 1000.0;
@@ -201,11 +209,10 @@ public class Fenetre extends JFrame implements ActionListener {
         if (e.getSource() == majPendule) {
             chrono.stop();
             this.p = new Pendule(Integer.parseInt(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
-                    Double.parseDouble(TxtAngleInitial.getText()), Integer.parseInt(TxtVinit.getText()), this);
+                    Double.parseDouble(TxtAngleInitial.getText()), Double.parseDouble(TxtVinit.getText()), this);
 
             this.ep = new Eprouvette(maListeMateriau.get(choixMat.getSelectedIndex()), 2, Integer.parseInt(TxtTailleTige.getText()));                   
             this.ep.hauteur = Integer.parseInt(TxtTailleTige.getText());
-            tempsMs = 0;
             monConteneur2.maj(p, ep);
             lancement.setBackground(Color.red);
             repaint();
