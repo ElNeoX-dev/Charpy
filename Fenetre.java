@@ -41,14 +41,14 @@ public class Fenetre extends JFrame implements ActionListener {
 
     public double tempsMs = 0;
 
-    public Fenetre(Pendule p, Eprouvette e) {
+    public Fenetre() {
         super("Affichage des courbes");
         setSize(1800, 1000);
         setLocation(0, 0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.p = p;
-        this.ep = e;
+        this.p = new Pendule(1, 500, 0, 0, this);
+        this.ep = new Eprouvette();
         chrono = new Timer(15, this);
 
         maListeMateriau = new ArrayList<Materiau>();
@@ -114,7 +114,7 @@ public class Fenetre extends JFrame implements ActionListener {
         monConteneur1.add(coeffFrottements);
 
         tailleTige = new JLabel();
-        tailleTige.setText("Taille tige");
+        tailleTige.setText("Taille tige en metres");
         tailleTige.setBounds(160, 600, 120, 30);
         monConteneur1.add(tailleTige);
 
@@ -124,7 +124,7 @@ public class Fenetre extends JFrame implements ActionListener {
         monConteneur1.add(TxtTailleTige);
 
         angleInitial = new JLabel();
-        angleInitial.setText("Angle initial");
+        angleInitial.setText("Angle initial en °");
         angleInitial.setBounds(20, 360, 120, 30);
         monConteneur1.add(angleInitial);
 
@@ -134,7 +134,7 @@ public class Fenetre extends JFrame implements ActionListener {
         monConteneur1.add(TxtAngleInitial);
 
         masseMarteau = new JLabel();
-        masseMarteau.setText("masse marteau");
+        masseMarteau.setText("masse marteau en kg");
         masseMarteau.setBounds(160, 360, 120, 30);
         monConteneur1.add(masseMarteau);
 
@@ -144,7 +144,7 @@ public class Fenetre extends JFrame implements ActionListener {
         monConteneur1.add(TxtMasseMarteau);
 
         vitesseInitiale = new JLabel();
-        vitesseInitiale.setText("Vitesse initiale");
+        vitesseInitiale.setText("Vitesse initiale en m/s");
         vitesseInitiale.setBounds(20, 480, 120, 30);
         monConteneur1.add(vitesseInitiale);
 
@@ -154,7 +154,7 @@ public class Fenetre extends JFrame implements ActionListener {
         monConteneur1.add(TxtVinit);
 
         epaisseurEprouvette = new JLabel();
-        epaisseurEprouvette.setText("Epaisseur éprouvette");
+        epaisseurEprouvette.setText("Epaisseur éprouvette en cm");
         epaisseurEprouvette.setBounds(160, 480, 120, 30);
         monConteneur1.add(epaisseurEprouvette);
 
@@ -175,6 +175,14 @@ public class Fenetre extends JFrame implements ActionListener {
         CoefFrottements.setPaintLabels(true);
 
         setVisible(true);
+    }
+
+    public Timer getChrono() {
+        return(chrono);
+    }
+
+    public void setTemps(double t) {
+        tempsMs = t;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -201,14 +209,19 @@ public class Fenetre extends JFrame implements ActionListener {
         if (e.getSource() == majPendule) {
             chrono.stop();
             this.p = new Pendule(Integer.parseInt(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
-                    Double.parseDouble(TxtAngleInitial.getText()), Integer.parseInt(TxtVinit.getText()), this);
+                    Double.parseDouble(TxtAngleInitial.getText()), Double.parseDouble(TxtVinit.getText()), this);
 
-            this.ep = new Eprouvette(maListeMateriau.get(choixMat.getSelectedIndex()), 2, Integer.parseInt(TxtTailleTige.getText()));                   
+            this.ep = new Eprouvette(maListeMateriau.get(choixMat.getSelectedIndex()), 2,
+                    Integer.parseInt(TxtTailleTige.getText()));
             this.ep.hauteur = Integer.parseInt(TxtTailleTige.getText());
-            tempsMs = 0;
             monConteneur2.maj(p, ep);
             lancement.setBackground(Color.red);
             repaint();
         }
     }
+    /*
+     * public void degreRadian (){
+     * this.angleInitial = angleInitial*Math.PI/180;
+     * }
+     */
 }

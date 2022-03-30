@@ -10,6 +10,7 @@ public class Pendule {
     int largeur = 50;
     double angle;
     double angleInitial;
+    double angleInitVirtuel;
     int vitesse;
     int [] tabX = new int [8];
     int [] tabY = new int [8];
@@ -21,17 +22,30 @@ public class Pendule {
     double vitesseAngulaire;
     double energieCinetique;
     double omega;
+    Fenetre fen;
 
     
-    public Pendule (int uneMasse, int uneLongueur, double unAngleInitial, int uneVitesseInitiale) {
+    public Pendule (int uneMasse, int uneLongueur, double unAngleInitial, double uneVitesseInitiale, Fenetre fen) {
         this.masse = uneMasse;
         this.longueur = uneLongueur;
         this.longueurReelle = longueur / 100.0;
         this.angle = unAngleInitial;
-        this.vitesse = uneVitesseInitiale;
         this.angleInitial = unAngleInitial;
-        this.energieInitiale = 1.0 /2.0 * masse * Math.pow(2,uneVitesseInitiale)+masse*9.81*(longueur*Math.cos(unAngleInitial));
-        this.energieCinetique = 1.0 / 2.0 * masse * Math.pow(2,uneVitesseInitiale);
+        this.energieInitiale = 1.0 /2.0 * masse * Math.pow(uneVitesseInitiale, 2) + masse  *9.81 * (longueur*Math.cos(unAngleInitial));
+        this.energieCinetique = 1.0 / 2.0 * masse * Math.pow(uneVitesseInitiale, 2);
+
+        if(uneVitesseInitiale != 0) {
+            angleInitVirtuel = Math.acos(energieInitiale / (masse * 9.81 * longueurReelle ));
+            double temps = 0;
+            while(angleInitVirtuel > angleInitial) {
+                angleInitVirtuel = angleInitial * Math.exp(-0.1 * omega * temps) * Math.cos(Math.sqrt(1-0.01) * omega * temps);
+                temps += fen.getChrono().getDelay() / 1000.0;
+            }
+            fen.setTemps(temps);
+            angleInitial = angleInitVirtuel;
+        } else {
+            fen.setTemps(0);
+        }
     }
 
     public void dessine (Graphics g) {
@@ -61,7 +75,7 @@ public class Pendule {
         if(e.estVivant) {
             if(angle == 0) {
                 if(energieCinetique < e.unMateriau.Resilience) {
-                    
+
                 }
                 return(true);
             }
@@ -71,7 +85,7 @@ public class Pendule {
 
      public void majPos(double temps) {
         this.majVitesse();
-        angle = angleInitial * Math.exp(-0.1* omega * temps) * Math.cos(Math.sqrt(1-0.01) * omega * temps);
+        angle = angleInitial * Math.exp(-0.1 * omega * temps) * Math.cos(Math.sqrt(1-0.01) * omega * temps);
      }
 
      public String toString() {
