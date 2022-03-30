@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Graphics;
 import java.awt.event.*;
 import javax.swing.Timer;
 import java.lang.Integer;
@@ -10,6 +9,7 @@ public class Fenetre extends JFrame implements ActionListener {
     public JPanel monConteneur1;
     public Dessin monConteneur2;
     public JPanel monConteneurMain;
+
     public JTextField monChamps1;
     public JTextField monChamps2;
     public JTextField monChamps3;
@@ -17,6 +17,7 @@ public class Fenetre extends JFrame implements ActionListener {
     public JTextField monChamps5;
     public JTextField monChamps6;
     public JTextField monChamps7;
+
     public JLabel monEtiquette1;
     public JLabel monEtiquette2;
     public JLabel monEtiquette3;
@@ -24,11 +25,14 @@ public class Fenetre extends JFrame implements ActionListener {
     public JLabel monEtiquette5;
     public JLabel monEtiquette6;
     public JLabel monEtiquette7;
+
     private Pendule p;
     private Eprouvette ep;
     private Timer chrono;
     public JButton majPendule;
     public JButton lancement;
+
+    public double tempsMs = 0;
 
     public Fenetre(Pendule p, Eprouvette e) {
         super("Affichage des courbes");
@@ -69,7 +73,7 @@ public class Fenetre extends JFrame implements ActionListener {
         monConteneur1.add(lancement);
 
         // boutons de maj de l'affichage
-        majPendule = new JButton("maj l'affichage");
+        majPendule = new JButton("Reset");
         majPendule.setBounds(150, 180, 120, 40);
         majPendule.setBackground(Color.red);
         majPendule.addActionListener(this);
@@ -157,20 +161,35 @@ public class Fenetre extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == chrono) {
+        if(e.getSource() == chrono && lancement.getBackground() == Color.green) {
+            tempsMs += chrono.getDelay() / 1000.0; 
+            p.majPos(tempsMs);
+            if(p.testCollision(ep)) {
+                ep.estVivant = false;
+            }
+            monConteneur2.maj(p, ep);
             repaint();
         }
 
         if(e.getSource() == lancement) {
+            if(lancement.getBackground() == Color.red) {
+                lancement.setBackground(Color.green);
+                chrono.start();
+            } else {
+                lancement.setBackground(Color.red);
+                chrono.stop();
+            }
+            
 
         }
 
         if(e.getSource() == majPendule) {
+            chrono.stop();
             this.p = new Pendule(Integer.parseInt(monChamps5.getText()), Integer.parseInt(monChamps3.getText()),
             Double.parseDouble(monChamps4.getText()), Integer.parseInt(monChamps6.getText()));
+            this.ep.hauteur = Integer.parseInt(monChamps3.getText());
             monConteneur2.maj(p, ep);
-            System.out.println(p);
-            monConteneur2.repaint();
+            repaint();
         }
     }
 }

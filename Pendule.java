@@ -27,7 +27,7 @@ public class Pendule {
 
     public void dessine (Graphics g) {
         g.setColor(Color.blue);
-        centreX = 500;
+        centreX = 600;
         centreY = 100;
         finX = (int) (centreX + longueur * Math.sin(angle));
         finY = (int) (centreY + longueur * Math.cos(angle));
@@ -42,13 +42,20 @@ public class Pendule {
         
      }
 
-     public void getVitesse () {
+     public void majVitesse () {
         double energieCinetique = energieInitiale-(9.81*masse*longueur*Math.cos(angle));
         double vitesseAngulaire = Math.sqrt(2*energieCinetique/masse)/longueur;
      }
 
+     public boolean testCollision(Eprouvette e) {
+         return(true);
+     }
+
+     public void majPos(double temps) {
+     }
+
      public String toString() {
-         return(longueur + " " + angle);
+         return("pendule");
      }
      
 }

@@ -5,6 +5,8 @@ public class Eprouvette {
     // ATTRIBUTS
     Materiau unMateriau;
     double section;
+    boolean estVivant;
+    int hauteur = 500;
 
     public Eprouvette() {
         section = 100;
@@ -13,6 +15,7 @@ public class Eprouvette {
     public Eprouvette (Materiau unMateriau, double uneSection) {
         this.unMateriau=unMateriau;
         section=uneSection;
+        estVivant = true;
     }
     
     public String toString(){
@@ -21,6 +24,6 @@ public class Eprouvette {
 
     public void dessine(Graphics g) {
         g.setColor(Color.green);
-        g.drawRect(600, 500, 50, 50);
+        g.fillRect(530, 75 + hauteur, 20, 50);
     }
 }
