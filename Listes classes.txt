@@ -1,25 +1,47 @@
-Listes des classes :
-Matériau (unNom, uneResilience, uneCouleur)
-Pendule (longueur du pendule, masse du pendule)
-Eprouvette(Matériau, section)
-Fenêtre (JFrame)
-Main
+Les imports : javax.swing.*, java.awt.*, java.awt.event.*, java.awt.color, java.lang.Integer
 
+Liste des classes : 
+.Dessin (extends JPanel)
+.Eprouvette 
+.Fenetre (extends Jpanel implements ActionListener)
 
-Les imports : javax.swing.*, java.awt.*, java.awt.event.*, java.awt.color
 
 Méthodes :
-Fenetre
--Lancement
--testCollision/testEprouvette
--majEnergie (surcharge su constructeur)
+.Dessin :
+	-Dessin(Pendule p, Eprouvette e)
+	-void paintComponent(Graphics g)
+	-void maj (Pendule p, Eprouvette e)
+.Eprouvette :
+	-Eprouvette ()
+	-Eprouvette (Materiau unMateriau, double uneSection)
+	-String toString ()
+	-void dessine (Graphics g)
 
-Pendule 
--pendule(masse,longueur,angleInitial,vitesseInitiale)
 
-
--Attributs : 
-(Materiau)
-String unNom
-double uneResilience
-Color uneCouleur
+Attributs : 
+.Dessin : 
+	-Pendule p
+	-Eprouvette e
+.Eprouvette : 
+	-Materiau m
+	-double section
+	-boolean estVivant
+	-int hauteur
+.Fenetre : 
+	-Dessin monConteneur 2
+	-JPanel monConteneur 1
+	-JPanel monConteneurMain
+	-JTextField TxtaffichageResultat;
+      -JTextField TxtCoefFrottements;
+      -JTextField TxtTailleTige;
+      -JTextField TxtAngleInitial;
+      -JTextField TxtMasseMarteau;
+      -JTextField TxtVinit;
+      -JTextField TxtEpaisseurEprouvette;
+      -JLabel affichageResultat;
+      -JLabel coeffFrottements;
+      -JLabel tailleTige;
+      -JLabel angleInitial;
+      -JLabel masseMarteau;
+      -JLabel vitesseInitiale;       
+	-JLabel epaisseurEprouvette;
