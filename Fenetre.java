@@ -224,4 +224,6 @@ public class Fenetre extends JFrame implements ActionListener {
      * this.angleInitial = angleInitial*Math.PI/180;
      * }
      */
+
+     // si cassé : JOptionPane.showMessageDialog(this, "Eprouvette Cassée !");
 }
