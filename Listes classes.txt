@@ -4,6 +4,8 @@ Liste des classes :
 .Dessin (extends JPanel)
 .Eprouvette 
 .Fenetre (extends Jpanel implements ActionListener)
+.Fenetremain
+.Materiau
 
 
 Méthodes :
@@ -17,7 +19,9 @@ Méthodes :
 	-String toString ()
 	-void dessine (Graphics g)
 .Fenetre : 
-	-Fenetre (
+	-Fenetre ()
+.Materiau :
+	-Materiau (String unNom, double uneResilience, Color uneCouleur)
 
 
 Attributs : 
@@ -57,3 +61,7 @@ Attributs :
 	-Eprouvette e2 
 	-Timer t
 	-double temps
+.Materiau : 
+	-String Nom
+	-double Resilience
+	-Color Couleur
