@@ -35,7 +35,7 @@ public class Fenetre extends JFrame implements ActionListener {
 
     public JComboBox<String> choixMat;
     public Eprouvette eprouvette;
-    public ArrayList<Materiau> maListeMateriau;
+    public BaseDonneeMateriaux BD;
 
     public JSlider CoefFrottements;
 
@@ -50,25 +50,11 @@ public class Fenetre extends JFrame implements ActionListener {
         this.p = new Pendule(1, 500, 0, 0, this);
         this.ep = new Eprouvette();
         chrono = new Timer(15, this);
+		BD=new BaseDonneeMateriaux();
 
-        maListeMateriau = new ArrayList<Materiau>();
-        maListeMateriau.add(new Materiau("Acier S235", 70, new Color(133, 133, 173)));
-        maListeMateriau.add(new Materiau("Acier S335", 60, new Color(54, 53, 53)));
-        maListeMateriau.add(new Materiau("Acier S22", 70, new Color(133, 133, 173)));
-        maListeMateriau.add(new Materiau("Acier F65-R850", 60, new Color(133, 133, 173)));
-        maListeMateriau.add(new Materiau("Acier F65-Rv550", 50, new Color(133, 133, 173)));
-        maListeMateriau.add(new Materiau("Acier F65-Rv200", 30, new Color(133, 133, 173)));
-        maListeMateriau.add(new Materiau("Acier Inox X5CrNi18-10", 120, new Color(224, 224, 224)));
-        maListeMateriau.add(new Materiau("Polyamide 11", 40, new Color(96, 96, 96)));
-        maListeMateriau.add(new Materiau("Nylon 6-6", 200, new Color(96, 96, 96)));
-        maListeMateriau.add(new Materiau("PVC", 320, new Color(96, 96, 96)));
-        maListeMateriau.add(new Materiau("Polycarboante", 200, new Color(224, 224, 224)));
-        maListeMateriau.add(new Materiau("PTFE", 160, new Color(220, 220, 220)));
-
-
-        String[] listeMat = new String[maListeMateriau.size()];
+        String[] listeMat = new String[BD.maListeMateriau.size()];
         for (int i = 0; i < listeMat.length; i++) {
-            listeMat[i] = maListeMateriau.get(i).Nom;
+            listeMat[i] = BD.maListeMateriau.get(i).Nom;
         }
         choixMat = new JComboBox<String>(listeMat);
         choixMat.setBounds(20, 630, 120, 50);
@@ -221,7 +207,7 @@ public class Fenetre extends JFrame implements ActionListener {
             this.p = new Pendule(Integer.parseInt(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
                     Double.parseDouble(TxtAngleInitial.getText()), Double.parseDouble(TxtVinit.getText()), this);
 
-            this.ep = new Eprouvette(maListeMateriau.get(choixMat.getSelectedIndex()), 2,
+            this.ep = new Eprouvette(BD.maListeMateriau.get(choixMat.getSelectedIndex()), 2,
                     Integer.parseInt(TxtTailleTige.getText()));
             this.ep.hauteur = Integer.parseInt(TxtTailleTige.getText());
             monConteneur2.maj(p, ep);
@@ -234,6 +220,4 @@ public class Fenetre extends JFrame implements ActionListener {
      * this.angleInitial = angleInitial*Math.PI/180;
      * }
      */
-
-     // si cassé : JOptionPane.showMessageDialog(this, "Eprouvette Cassée !");
 }
