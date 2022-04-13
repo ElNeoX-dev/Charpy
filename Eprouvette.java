@@ -5,7 +5,7 @@ public class Eprouvette {
     // ATTRIBUTS
     Materiau unMateriau;
     double section;
-    boolean estVivant;
+    boolean estVivant=true;
     int hauteur;
     Color couleur = Color.green;
 
@@ -27,7 +27,16 @@ public class Eprouvette {
 	}
 
     public void dessine(Graphics g) {
-        g.setColor(couleur);
-        g.fillRect(530, 75 + hauteur, 20, 50);
+		g.setColor(couleur);
+		if(estVivant==true){	
+			g.fillRect(530, 75 + hauteur, 20, 50);
+		}else{
+			g.fillRect(480, 890, 8, 10);
+			g.fillRect(490, 885, 5, 15);
+			g.fillRect(499, 893, 6, 7);
+			g.fillRect(520, 890, 10, 10);
+			g.fillRect(545, 893, 20, 7);
+			g.fillRect(572, 891, 14, 9);
+		}
     }
 }
