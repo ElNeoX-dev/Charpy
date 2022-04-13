@@ -183,7 +183,6 @@ public class Fenetre extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == chrono && lancement.getBackground() == Color.green) {
-            tempsMs += chrono.getDelay() / 1000.0;
             repaint();
         }
 
