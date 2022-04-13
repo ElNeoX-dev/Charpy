@@ -23,7 +23,7 @@ public ArrayList<Materiau> maListeMateriau;
         maListeMateriau.add(new Materiau("Bois de châtaignier", 6, new Color(102, 56, 0)));
         maListeMateriau.add(new Materiau("Bois de chêne", 7.5, new Color(102, 56, 0)));
         maListeMateriau.add(new Materiau("Noyer", 9.5, new Color(102, 56, 0)));
-        maListeMateriau.add(new Materiau("bois de Hêtre", 12, new Color(102, 56, 0)));
+        maListeMateriau.add(new Materiau("Bois de Hêtre", 12, new Color(102, 56, 0)));
         maListeMateriau.add(new Materiau("Epicéa", 5, new Color(102, 56, 0)));
 
 
