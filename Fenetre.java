@@ -47,8 +47,6 @@ public class Fenetre extends JFrame implements ActionListener {
         setLocation(0, 0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.p = new Pendule(1, 500, 0, 0, 0, this);
-        this.ep = new Eprouvette();
         chrono = new Timer(1, this);
 		BD=new BaseDonneeMateriaux();
 
@@ -58,6 +56,8 @@ public class Fenetre extends JFrame implements ActionListener {
         }
         choixMat = new JComboBox<String>(listeMat);
         choixMat.setBounds(20, 630, 120, 50);
+        this.ep = new Eprouvette(BD.maListeMateriau.get(0), 100, 500);
+        this.p = new Pendule(1, 500, 0, 0, 0, ep);
 
         // conteneurs
         monConteneur1 = new JPanel();
@@ -199,12 +199,15 @@ public class Fenetre extends JFrame implements ActionListener {
         if (e.getSource() == majPendule) {
             chrono.stop();
             double frottements = CoefFrottements.getValue() / 1000.0;
-            this.p = new Pendule(Integer.parseInt(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
-                    Double.parseDouble(TxtAngleInitial.getText()), Double.parseDouble(TxtVinit.getText()), frottements, this);
-
             this.ep = new Eprouvette(BD.maListeMateriau.get(choixMat.getSelectedIndex()), 2,
-                    Integer.parseInt(TxtTailleTige.getText()));
+            Integer.parseInt(TxtTailleTige.getText()));
+
             this.ep.hauteur = Integer.parseInt(TxtTailleTige.getText());
+            
+            this.p = new Pendule(Integer.parseInt(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
+                    Double.parseDouble(TxtAngleInitial.getText()), Double.parseDouble(TxtVinit.getText()), frottements, ep);
+
+
             monConteneur2.maj(p, ep);
             lancement.setBackground(Color.red);
             repaint();
