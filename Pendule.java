@@ -23,13 +23,14 @@ public class Pendule {
     int incrémentationEuler = 0;
 
     
-    public Pendule (int uneMasse, int uneLongueur, double unAngleInitial, double uneVitesseInitiale, Fenetre fen) {
+    public Pendule (int uneMasse, int uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Fenetre fen) {
         this.masse = uneMasse;
         this.longueur = uneLongueur;
         this.longueurReelle = longueur / 100.0;
         theta.add(unAngleInitial);
         omega.add(uneVitesseInitiale);
         this.fen = fen;
+        this.frottements = unFrottement;
     }
 
     public void dessine (Graphics g) {
