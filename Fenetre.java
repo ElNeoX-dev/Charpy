@@ -49,7 +49,7 @@ public class Fenetre extends JFrame implements ActionListener {
 
         this.p = new Pendule(1, 500, 0, 0, this);
         this.ep = new Eprouvette();
-        chrono = new Timer(15, this);
+        chrono = new Timer(1, this);
 		BD=new BaseDonneeMateriaux();
 
         String[] listeMat = new String[BD.maListeMateriau.size()];
@@ -184,11 +184,6 @@ public class Fenetre extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == chrono && lancement.getBackground() == Color.green) {
             tempsMs += chrono.getDelay() / 1000.0;
-            p.majPos(tempsMs);
-            if (p.testCollision(ep)) {
-                ep.estVivant = false;
-            }
-            monConteneur2.maj(p, ep);
             repaint();
         }
 
