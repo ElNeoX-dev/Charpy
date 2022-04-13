@@ -20,6 +20,12 @@ public ArrayList<Materiau> maListeMateriau;
         maListeMateriau.add(new Materiau("PVC", 320, new Color(96, 96, 96)));
         maListeMateriau.add(new Materiau("Polycarboante", 200, new Color(224, 224, 224)));
         maListeMateriau.add(new Materiau("PTFE", 160, new Color(220, 220, 220)));
+        maListeMateriau.add(new Materiau("Bois de châtaignier", 6, new Color(102, 56, 0)));
+        maListeMateriau.add(new Materiau("Bois de chêne", 7.5, new Color(102, 56, 0)));
+        maListeMateriau.add(new Materiau("Noyer", 9.5, new Color(102, 56, 0)));
+        maListeMateriau.add(new Materiau("bois de Hêtre", 12, new Color(102, 56, 0)));
+        maListeMateriau.add(new Materiau("Epicéa", 5, new Color(102, 56, 0)));
+
 
 	}
 }
