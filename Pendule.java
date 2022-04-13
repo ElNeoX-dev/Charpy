@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.function.UnaryOperator;
 
 public class Pendule {
 
@@ -31,12 +30,20 @@ public class Pendule {
         this.longueurReelle = longueur / 100.0;
         this.angle = unAngleInitial;
         this.angleInitial = unAngleInitial;
-        this.energieInitiale = 1.0 /2.0 * masse * Math.pow(uneVitesseInitiale, 2) + masse  *9.81 * (longueur*Math.cos(unAngleInitial));
+        this.energieInitiale = 1.0 /2.0 * masse * Math.pow(uneVitesseInitiale, 2) + masse  * 9.81 * (longueur * (1 - Math.cos(unAngleInitial)));
         this.energieCinetique = 1.0 / 2.0 * masse * Math.pow(uneVitesseInitiale, 2);
 
         if(uneVitesseInitiale != 0) {
-            angleInitVirtuel = Math.acos(energieInitiale / (masse * 9.81 * longueurReelle ));
+            double cosO = Math.abs(1 - (energieInitiale / (masse * 9.81 * longueurReelle )));
+            System.out.println(cosO);
+            while(cosO > Math.PI) {
+                cosO -= Math.PI;
+                System.out.println(cosO);
+            }
+            angleInitVirtuel = Math.acos(cosO);
+            System.out.println(angleInitVirtuel);
             double temps = 0;
+            omega = 1 / (Math.sqrt(longueurReelle / 9.81) * (1 + Math.pow(angleInitVirtuel, 2) / 16));
             while(angleInitVirtuel > angleInitial) {
                 angleInitVirtuel = angleInitial * Math.exp(-0.1 * omega * temps) * Math.cos(Math.sqrt(1-0.01) * omega * temps);
                 temps += fen.getChrono().getDelay() / 1000.0;
@@ -68,7 +75,7 @@ public class Pendule {
      public void majVitesse () {
         energieCinetique = energieInitiale-(9.81*masse*longueurReelle*Math.cos(angle));
         vitesseAngulaire = Math.sqrt(2*energieCinetique/masse)/longueurReelle;
-        omega = 1/ (Math.sqrt(longueurReelle / 9.81) * (1 + Math.pow(angleInitial, 2) / 16));
+        omega = 1 / (Math.sqrt(longueurReelle / 9.81) * (1 + Math.pow(angleInitial, 2) / 16));
          }
 
      public boolean testCollision(Eprouvette e) {
