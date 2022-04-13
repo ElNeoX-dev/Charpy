@@ -47,7 +47,7 @@ public class Fenetre extends JFrame implements ActionListener {
         setLocation(0, 0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.p = new Pendule(1, 500, 0, 0, this);
+        this.p = new Pendule(1, 500, 0, 0, 0, this);
         this.ep = new Eprouvette();
         chrono = new Timer(1, this);
 		BD=new BaseDonneeMateriaux();
