@@ -211,8 +211,8 @@ public class Fenetre extends JFrame implements ActionListener {
 
             double frottements = CoefFrottements.getValue() / 1000.0;
 
-            this.ep = new Eprouvette(BD.maListeMateriau.get(choixMat.getSelectedIndex()), 2,
-            Integer.parseInt(TxtTailleTige.getText())); 
+            this.ep = new Eprouvette(BD.maListeMateriau.get(choixMat.getSelectedIndex()), Integer.parseInt(TxtEpaisseurEprouvette.getText()),
+            Integer.parseInt(TxtTailleTige.getText())*100); 
             
             p.resetPendule(Integer.parseInt(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
             Double.parseDouble(TxtAngleInitial.getText()), Double.parseDouble(TxtVinit.getText()), frottements, ep);

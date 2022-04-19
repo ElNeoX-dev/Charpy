@@ -40,7 +40,7 @@ public class Pendule {
         theta.clear();
         omega.clear();
         this.masse = uneMasse;
-        this.longueur = uneLongueur;
+        this.longueur = uneLongueur*100;
         this.longueurReelle = longueur / 100.0;
         theta.add(unAngleInitial);
         omega.add(uneVitesseInitiale);
@@ -74,15 +74,15 @@ public class Pendule {
      }
 
      public void testCollision() {
-        if((ep.estVivant && theta.getLast() <= 0)  && (energieCinetique < ep.unMateriau.Resilience)) {
+        if((ep.estVivant && theta.getLast() <= 0)  && (energieCinetique < ep.unMateriau.Resilience*ep.section)) {
             //theta.clear();
             //omega.clear();
             energieCinetique *= 0.2;
             theta.add(0.001);
             omega.add(Math.sqrt(2 * energieCinetique / this.masse) / this.longueurReelle);
             
-        } else if(ep.estVivant && (energieCinetique > ep.unMateriau.Resilience) && (theta.getLast() <= 0)) {
-            energieCinetique-= ep.unMateriau.Resilience;
+        } else if(ep.estVivant && (energieCinetique > ep.unMateriau.Resilience*ep.section) && (theta.getLast() <= 0)) {
+            energieCinetique-= ep.unMateriau.Resilience*ep.section;
             omega.add(- Math.sqrt(2 * energieCinetique / this.masse) / this.longueurReelle);
             ep.estVivant = false;
         }
