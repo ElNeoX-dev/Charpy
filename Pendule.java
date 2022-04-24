@@ -23,6 +23,7 @@ public class Pendule {
     Eprouvette ep;
     int incrémentationEuler = 0;
     Fenetre f;
+    int EprouDetruite=0; //0=etat initial 1=detruit 2=non detruit
 
     
     public Pendule (double uneMasse, int uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Eprouvette ep, Fenetre f) {
@@ -85,6 +86,7 @@ public class Pendule {
             energieCinetique-= ep.unMateriau.Resilience*ep.section;
             omega.add(- Math.sqrt(2 * energieCinetique / this.masse) / this.longueurReelle);
             ep.estVivant = false;
+            EprouDetruite=1;
         }
 
 

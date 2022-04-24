@@ -40,6 +40,8 @@ public class Fenetre extends JFrame implements ActionListener {
     public JSlider CoefFrottements;
 
     public double tempsMs = 0;
+    
+    public String MessageInitial="Bienvenue sur le simulateur de Mouton de \n"+"Charpy\n"+"\n"+"Pour commencer :\n"+"-Chosissez vos valeurs\n"+"-Appuyez sur le bouton Reset";
 
     public Fenetre() {
         super("Affichage des courbes");
@@ -105,7 +107,7 @@ public class Fenetre extends JFrame implements ActionListener {
         affichageResultat.setBounds(75, 20, 260, 30);
         monConteneur1.add(affichageResultat);
 
-        TxtaffichageResultat = new JTextArea("Bienvenue sur le simulateur de Mouton de \n"+"Charpy\n"+"\n"+"Pour commencer :\n"+"-Chosissez vos valeurs\n"+"-Appuyez sur le bouton Reset"); // affichage résultat
+        TxtaffichageResultat = new JTextArea(MessageInitial); // affichage résultat
         TxtaffichageResultat.setBounds(20, 60, 260, 100);
         TxtaffichageResultat.setBackground(Color.white);
         monConteneur1.add(TxtaffichageResultat);
@@ -206,7 +208,6 @@ public class Fenetre extends JFrame implements ActionListener {
 
 
         if (e.getSource() == majPendule) {
-
             chrono.stop();
 
             double frottements = CoefFrottements.getValue() / 1000.0;
@@ -225,9 +226,20 @@ public class Fenetre extends JFrame implements ActionListener {
             monConteneur2.maj(p, ep);
             lancement.setBackground(Color.red);
             repaint();
+            p.EprouDetruite=0;
+            TxtaffichageResultat.setText(MessageInitial);
             
            }
         }
+        if(p.theta.getLast()>p.theta.get(p.theta.size()-2) && ep.estVivant==true){
+			p.EprouDetruite=2;
+		}
+        if(p.EprouDetruite==1){
+			TxtaffichageResultat.setText("L'éprouvette a été détruite");
+		}
+		if(p.EprouDetruite==2){
+			TxtaffichageResultat.setText("L'éprouvette n'a pas été détruite");
+		}
     }
 
 
