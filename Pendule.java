@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class Pendule {
 
-    int masse;
+    double masse;
     int longueur = 500;
     double longueurReelle;
     int largeur = 50;
@@ -25,7 +25,7 @@ public class Pendule {
     Fenetre f;
 
     
-    public Pendule (int uneMasse, int uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Eprouvette ep, Fenetre f) {
+    public Pendule (double uneMasse, int uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Eprouvette ep, Fenetre f) {
         this.masse = uneMasse;
         this.longueur = uneLongueur;
         this.longueurReelle = longueur / 100.0;
@@ -36,7 +36,7 @@ public class Pendule {
         this.f = f;
     }
 
-    public void resetPendule(int uneMasse, int uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Eprouvette ep) {
+    public void resetPendule(double uneMasse, int uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Eprouvette ep) {
         theta.clear();
         omega.clear();
         this.masse = uneMasse;

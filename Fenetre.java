@@ -11,7 +11,7 @@ public class Fenetre extends JFrame implements ActionListener {
     public Dessin monConteneur2;
     public JPanel monConteneurMain;
 
-    public JTextField TxtaffichageResultat;
+    public JTextArea TxtaffichageResultat;
     public JTextField TxtCoefFrottements;
     public JTextField TxtTailleTige;
     public JTextField TxtAngleInitial;
@@ -62,7 +62,7 @@ public class Fenetre extends JFrame implements ActionListener {
 
 
         this.ep = new Eprouvette(BD.maListeMateriau.get(0), 100, 500);
-        this.p = new Pendule(1, 500, 0, 0, 0, ep, this);
+        this.p = new Pendule(1.0, 500, 0, 0, 0, ep, this);
 
         // conteneurs
         monConteneur1 = new JPanel();
@@ -105,7 +105,7 @@ public class Fenetre extends JFrame implements ActionListener {
         affichageResultat.setBounds(75, 20, 260, 30);
         monConteneur1.add(affichageResultat);
 
-        TxtaffichageResultat = new JTextField(""); // affichage résultat
+        TxtaffichageResultat = new JTextArea("Bienvenue sur le simulateur de Mouton de \n"+"Charpy\n"+"\n"+"Pour commencer :\n"+"-Chosissez vos valeurs\n"+"-Appuyez sur le bouton Reset"); // affichage résultat
         TxtaffichageResultat.setBounds(20, 60, 260, 100);
         TxtaffichageResultat.setBackground(Color.white);
         monConteneur1.add(TxtaffichageResultat);
@@ -210,17 +210,23 @@ public class Fenetre extends JFrame implements ActionListener {
             chrono.stop();
 
             double frottements = CoefFrottements.getValue() / 1000.0;
+            
+            if(Integer.parseInt(TxtTailleTige.getText())>7){
+				JOptionPane.showMessageDialog(this,"Merci de ne pas dépasser 7m de longueur de tige afin de ne pas sortir de la taille de la fenêtre");
+			}else{
 
             this.ep = new Eprouvette(BD.maListeMateriau.get(choixMat.getSelectedIndex()), Integer.parseInt(TxtEpaisseurEprouvette.getText()),
             Integer.parseInt(TxtTailleTige.getText())*100); 
             
-            p.resetPendule(Integer.parseInt(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
+            p.resetPendule(Double.parseDouble(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
             Double.parseDouble(TxtAngleInitial.getText()), Double.parseDouble(TxtVinit.getText()), frottements, ep);
 
 
             monConteneur2.maj(p, ep);
             lancement.setBackground(Color.red);
             repaint();
+            
+           }
         }
     }
 
