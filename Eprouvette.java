@@ -28,9 +28,9 @@ public class Eprouvette {
 
     public void dessine(Graphics g) {
 		g.setColor(couleur);
-		if(estVivant==true){	
-			g.fillRect(530, 75 + hauteur, 20, 50);
-		}else{
+		if(estVivant==true) {	
+			g.fillRect(580 - hauteur / 10, 75 + hauteur, 20, 50);
+		} else {
 			g.fillRect(480, 890, 8, 10);
 			g.fillRect(490, 885, 5, 15);
 			g.fillRect(499, 893, 6, 7);

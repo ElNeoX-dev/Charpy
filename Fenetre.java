@@ -3,7 +3,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.Timer;
 import java.lang.Integer;
-import java.util.ArrayList;
+import java.util.*;
+import java.io.*;
+import java.text.SimpleDateFormat;
 
 public class Fenetre extends JFrame implements ActionListener {
 
@@ -43,6 +45,8 @@ public class Fenetre extends JFrame implements ActionListener {
     
     public String MessageInitial="Bienvenue sur le simulateur de Mouton de \n"+"Charpy\n"+"\n"+"Pour commencer :\n"+"-Chosissez vos valeurs\n"+"-Appuyez sur le bouton Reset";
 
+    public String resumeSimulation;
+
     public Fenetre() {
         super("Affichage des courbes");
         setSize(1800, 1000);
@@ -64,7 +68,7 @@ public class Fenetre extends JFrame implements ActionListener {
 
 
         this.ep = new Eprouvette(BD.maListeMateriau.get(0), 100, 500);
-        this.p = new Pendule(1.0, 500, 0, 0, 0, ep, this);
+        this.p = new Pendule(1.0, 5, 0, 0, 0, ep, this);
 
         // conteneurs
         monConteneur1 = new JPanel();
@@ -208,9 +212,9 @@ public class Fenetre extends JFrame implements ActionListener {
 
 
         if (e.getSource() == majPendule) {
-            chrono.stop();
-
             double frottements = CoefFrottements.getValue() / 1000.0;
+
+            chrono.stop();
             
             if(Integer.parseInt(TxtTailleTige.getText())>7){
 				JOptionPane.showMessageDialog(this,"Merci de ne pas dépasser 7m de longueur de tige afin de ne pas sortir de la taille de la fenêtre");
@@ -220,7 +224,7 @@ public class Fenetre extends JFrame implements ActionListener {
             Integer.parseInt(TxtTailleTige.getText())*100); 
             
             p.resetPendule(Double.parseDouble(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
-            Double.parseDouble(TxtAngleInitial.getText()), Double.parseDouble(TxtVinit.getText()), frottements, ep);
+            (Math.PI/180.0) * Double.parseDouble(TxtAngleInitial.getText()), -1 * Double.parseDouble(TxtVinit.getText()), frottements, ep);
 
 
             monConteneur2.maj(p, ep);
@@ -228,21 +232,74 @@ public class Fenetre extends JFrame implements ActionListener {
             repaint();
             p.EprouDetruite=0;
             TxtaffichageResultat.setText(MessageInitial);
-            
+
+            resumeSimulation ="*** Compte-rendu de la simulation *** \n" +
+            "Conditions initiales de la simulation : \n" +
+            "Angle initial = " +  TxtAngleInitial.getText() + "degre\n" +
+            "Vitesse initial = " + TxtVinit.getText() + " m/s\n" +
+            "Taille tige = " + TxtTailleTige.getText() + " m\n" +
+            "Masse marteau = " + TxtMasseMarteau.getText() + " kg\n" +
+            "Coefficient de frottements = " + frottements + "\n" +
+            "Section Eprouvette = " + TxtEpaisseurEprouvette + " cm*cm \n" + 
+            "Materiau eprouvette : " + BD.maListeMateriau.get(choixMat.getSelectedIndex()).Nom
+            + " de resilience : " + BD.maListeMateriau.get(choixMat.getSelectedIndex()).Resilience + " J/cm*cm \n";
            }
         }
-        if(p.theta.getLast()>p.theta.get(p.theta.size()-2) && ep.estVivant==true){
+
+        if(p.theta.size() >= 2 && p.theta.getLast()>p.theta.get(p.theta.size()-2) && ep.estVivant==true){
 			p.EprouDetruite=2;
 		}
+
         if(p.EprouDetruite==1){
 			TxtaffichageResultat.setText("L'éprouvette a été détruite");
 		}
+
 		if(p.EprouDetruite==2){
 			TxtaffichageResultat.setText("L'éprouvette n'a pas été détruite");
 		}
     }
 
+    public void ecritureResultat() {
 
+        SimpleDateFormat formatDatePourNomFichier = new SimpleDateFormat("yyyyMMdd-HHmmss");
+        String datePourNomFichier = formatDatePourNomFichier.format(new Date());
+        String nomFichier = "resultat_" + datePourNomFichier + ".csv";
+
+        try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream("./output/" + nomFichier)))) {
+
+            writer.append(resumeSimulation);
+
+            if(ep.estVivant) {
+                writer.append("L'eprouvette n'a pas ete detruite ! \n");
+            } else {
+                writer.append("L'eprouvette a ete detruite ! \n");
+            }
+            writer.append("angleRad;vitesseAngulaire \n");
+
+
+            for (int i = 0; i < p.theta.size(); i++) {
+                writer.append(p.theta.get(i) + ";" + p.omega.get(i)+ "\n");
+            }
+
+
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        majPendule.doClick();
+
+        JOptionPane.showMessageDialog(this,"Simulation terminée ! \n Résultats disponibles dans le dossier output."
+        , "Simulation réussie !", 2);
+
+
+    }
+
+    public void limiteAtteinte() {
+        majPendule.doClick();
+        resumeSimulation += "!!! Les limites de la simulation ont été atteintes !!! \n Cela peut être du à une vitesse initiale trop grande. \n";
+        JOptionPane.showMessageDialog(this,"Limite de simulation atteinte", "Erreur simulation", 0);
+    }
     /*
      * public void degreRadian (){
      * this.angleInitial = angleInitial*Math.PI/180;
