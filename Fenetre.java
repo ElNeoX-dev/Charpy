@@ -216,9 +216,10 @@ public class Fenetre extends JFrame implements ActionListener {
 
             chrono.stop();
             
-            if(Integer.parseInt(TxtTailleTige.getText())>7){
+            if(Integer.parseInt(TxtTailleTige.getText()) > 7) {
 				JOptionPane.showMessageDialog(this,"Merci de ne pas dépasser 7m de longueur de tige afin de ne pas sortir de la taille de la fenêtre");
-			}else{
+			
+            } else {
 
             this.ep = new Eprouvette(BD.maListeMateriau.get(choixMat.getSelectedIndex()), Integer.parseInt(TxtEpaisseurEprouvette.getText()),
             Integer.parseInt(TxtTailleTige.getText())*100); 
