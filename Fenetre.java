@@ -43,7 +43,7 @@ public class Fenetre extends JFrame implements ActionListener {
 
     public double tempsMs = 0;
     
-    public String MessageInitial="Bienvenue sur le simulateur de Mouton de \n"+"Charpy\n"+"\n"+"Pour commencer :\n"+"-Chosissez vos valeurs\n"+"-Appuyez sur le bouton Reset";
+    public String MessageInitial="Bienvenue sur le simulateur de Mouton de \n"+"Charpy\n"+"\n"+"Pour commencer :\n"+"-Chosissez vos valeurs\n"+"-Appuyez sur le bouton Reset\n"+"-Appuyez sur le bouton Lancer";
 
     public String resumeSimulation;
 
@@ -64,7 +64,7 @@ public class Fenetre extends JFrame implements ActionListener {
         }
 
         choixMat = new JComboBox<String>(listeMat);
-        choixMat.setBounds(20, 630, 120, 50);
+        choixMat.setBounds(20, 740, 120, 50);
 
 
         this.ep = new Eprouvette(BD.maListeMateriau.get(0), 100, 500);
@@ -108,11 +108,11 @@ public class Fenetre extends JFrame implements ActionListener {
         // TextField + étiquettes
         affichageResultat = new JLabel();
         affichageResultat.setText("Affichage résultat");
-        affichageResultat.setBounds(75, 20, 260, 30);
+        affichageResultat.setBounds(80, 5, 260, 30);
         monConteneur1.add(affichageResultat);
 
         TxtaffichageResultat = new JTextArea(MessageInitial); // affichage résultat
-        TxtaffichageResultat.setBounds(20, 60, 260, 100);
+        TxtaffichageResultat.setBounds(20, 40, 260, 120);
         TxtaffichageResultat.setBackground(Color.white);
         monConteneur1.add(TxtaffichageResultat);
 
@@ -122,12 +122,12 @@ public class Fenetre extends JFrame implements ActionListener {
         monConteneur1.add(coeffFrottements);
 
         tailleTige = new JLabel();
-        tailleTige.setText("Taille tige en metres");
-        tailleTige.setBounds(160, 600, 120, 30);
+        tailleTige.setText("Taille tige (m)");
+        tailleTige.setBounds(160, 480, 120, 30);
         monConteneur1.add(tailleTige);
 
         TxtTailleTige = new JTextField(5); // taille tige
-        TxtTailleTige.setBounds(160, 640, 120, 60);
+        TxtTailleTige.setBounds(160, 520, 120, 60);
         TxtTailleTige.setBackground(Color.white);
         monConteneur1.add(TxtTailleTige);
 
@@ -142,7 +142,7 @@ public class Fenetre extends JFrame implements ActionListener {
         monConteneur1.add(TxtAngleInitial);
 
         masseMarteau = new JLabel();
-        masseMarteau.setText("masse marteau en kg");
+        masseMarteau.setText("masse marteau (kg)");
         masseMarteau.setBounds(160, 360, 120, 30);
         monConteneur1.add(masseMarteau);
 
@@ -152,7 +152,7 @@ public class Fenetre extends JFrame implements ActionListener {
         monConteneur1.add(TxtMasseMarteau);
 
         vitesseInitiale = new JLabel();
-        vitesseInitiale.setText("Vitesse initiale en m/s");
+        vitesseInitiale.setText("Vitesse initiale (m/s)");
         vitesseInitiale.setBounds(20, 480, 120, 30);
         monConteneur1.add(vitesseInitiale);
 
@@ -162,12 +162,12 @@ public class Fenetre extends JFrame implements ActionListener {
         monConteneur1.add(TxtVinit);
 
         epaisseurEprouvette = new JLabel();
-        epaisseurEprouvette.setText("Epaisseur éprouvette en cm");
-        epaisseurEprouvette.setBounds(160, 480, 120, 30);
+        epaisseurEprouvette.setText("Epaisseur éprouvette (cm)");
+        epaisseurEprouvette.setBounds(20, 600, 150, 30);
         monConteneur1.add(epaisseurEprouvette);
 
         TxtEpaisseurEprouvette = new JTextField(0); // épaisseur éprouvette
-        TxtEpaisseurEprouvette.setBounds(160, 520, 120, 60);
+        TxtEpaisseurEprouvette.setBounds(20, 640, 120, 60);
         TxtEpaisseurEprouvette.setBackground(Color.white);
         monConteneur1.add(TxtEpaisseurEprouvette);
 
@@ -218,6 +218,9 @@ public class Fenetre extends JFrame implements ActionListener {
             
             if(Integer.parseInt(TxtTailleTige.getText()) > 7) {
 				JOptionPane.showMessageDialog(this,"Merci de ne pas dépasser 7m de longueur de tige afin de ne pas sortir de la taille de la fenêtre");
+			
+            } else if(Double.parseDouble(TxtAngleInitial.getText()) >175) {
+				JOptionPane.showMessageDialog(this,"Merci de choisir un angle inférieur ou égal à 175° afin de ne pas sortir des limites de la simulation");
 			
             } else {
 
