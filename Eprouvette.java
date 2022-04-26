@@ -14,11 +14,11 @@ public class Eprouvette {
         hauteur = 500;
     }
 
-    public Eprouvette (Materiau unMateriau, double uneSection, int hauteur) {
+    public Eprouvette (Materiau unMateriau, double uneSection, double hauteur) {
         this.unMateriau=unMateriau;
         section=uneSection;
         estVivant = true;
-        this.hauteur = hauteur;
+        this.hauteur = (int)hauteur;
         couleur = unMateriau.Couleur;
     }
     
@@ -31,12 +31,12 @@ public class Eprouvette {
 		if(estVivant==true) {	
 			g.fillRect(580 - hauteur / 10, 75 + hauteur, 20, 50);
 		} else {
-			g.fillRect(480, 890, 8, 10);
-			g.fillRect(490, 885, 5, 15);
-			g.fillRect(499, 893, 6, 7);
-			g.fillRect(520, 890, 10, 10);
-			g.fillRect(545, 893, 20, 7);
-			g.fillRect(572, 891, 14, 9);
+			g.fillRect(480, 760, 8, 10);
+			g.fillRect(490, 765, 5, 15);
+			g.fillRect(499, 763, 6, 7);
+			g.fillRect(520, 760, 10, 10);
+			g.fillRect(545, 763, 20, 7);
+			g.fillRect(572, 761, 14, 9);
 		}
     }
 }

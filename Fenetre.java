@@ -49,9 +49,11 @@ public class Fenetre extends JFrame implements ActionListener {
 
     public Fenetre() {
         super("Affichage des courbes");
-        setSize(1800, 1000);
+        //setSize(1800, 1000);
         setLocation(0, 0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //setUndecorated(true);
 
 
         chrono = new Timer(1, this);
@@ -64,7 +66,7 @@ public class Fenetre extends JFrame implements ActionListener {
         }
 
         choixMat = new JComboBox<String>(listeMat);
-        choixMat.setBounds(20, 740, 120, 50);
+        choixMat.setBounds(20, 720, 120, 50);
 
 
         this.ep = new Eprouvette(BD.maListeMateriau.get(0), 100, 500);
@@ -216,51 +218,45 @@ public class Fenetre extends JFrame implements ActionListener {
 
             chrono.stop();
             
-            if(Integer.parseInt(TxtTailleTige.getText()) > 7) {
-				JOptionPane.showMessageDialog(this,"Merci de ne pas dépasser 7m de longueur de tige afin de ne pas sortir de la taille de la fenêtre");
-			
-            } else if(Double.parseDouble(TxtAngleInitial.getText()) >175) {
-				JOptionPane.showMessageDialog(this,"Merci de choisir un angle inférieur ou égal à 175° afin de ne pas sortir des limites de la simulation");
-			
-            } else {
-
-            this.ep = new Eprouvette(BD.maListeMateriau.get(choixMat.getSelectedIndex()), Integer.parseInt(TxtEpaisseurEprouvette.getText()),
-            Integer.parseInt(TxtTailleTige.getText())*100); 
+            if(verifValeur()) {
+                this.ep = new Eprouvette(BD.maListeMateriau.get(choixMat.getSelectedIndex()), Double.parseDouble(TxtEpaisseurEprouvette.getText()),
+                Double.parseDouble(TxtTailleTige.getText())*100); 
+                    
+                p.resetPendule(Double.parseDouble(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
+                (Math.PI/180.0) * Double.parseDouble(TxtAngleInitial.getText()), -1 * Double.parseDouble(TxtVinit.getText()), frottements, ep);
+   
+   
+                monConteneur2.maj(p, ep);
+                lancement.setBackground(Color.red);
+                repaint();
+                p.EprouDetruite=0;
+                TxtaffichageResultat.setText(MessageInitial);
+   
+                resumeSimulation ="*** Compte-rendu de la simulation *** \n" +
+                "Conditions initiales de la simulation : \n" +
+                "Angle initial = " +  TxtAngleInitial.getText() + "degre\n" +
+                "Vitesse initial = " + TxtVinit.getText() + " m/s\n" +
+                "Taille tige = " + TxtTailleTige.getText() + " m\n" +
+                "Masse marteau = " + TxtMasseMarteau.getText() + " kg\n" +
+                "Coefficient de frottements = " + frottements + "\n" +
+                "Section Eprouvette = " + TxtEpaisseurEprouvette.getText() + " cm*cm \n" + 
+                "Materiau eprouvette : " + BD.maListeMateriau.get(choixMat.getSelectedIndex()).Nom
+                + " de resilience : " + BD.maListeMateriau.get(choixMat.getSelectedIndex()).Resilience + " J/cm*cm \n";
             
-            p.resetPendule(Double.parseDouble(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
-            (Math.PI/180.0) * Double.parseDouble(TxtAngleInitial.getText()), -1 * Double.parseDouble(TxtVinit.getText()), frottements, ep);
-
-
-            monConteneur2.maj(p, ep);
-            lancement.setBackground(Color.red);
-            repaint();
-            p.EprouDetruite=0;
-            TxtaffichageResultat.setText(MessageInitial);
-
-            resumeSimulation ="*** Compte-rendu de la simulation *** \n" +
-            "Conditions initiales de la simulation : \n" +
-            "Angle initial = " +  TxtAngleInitial.getText() + "degre\n" +
-            "Vitesse initial = " + TxtVinit.getText() + " m/s\n" +
-            "Taille tige = " + TxtTailleTige.getText() + " m\n" +
-            "Masse marteau = " + TxtMasseMarteau.getText() + " kg\n" +
-            "Coefficient de frottements = " + frottements + "\n" +
-            "Section Eprouvette = " + TxtEpaisseurEprouvette + " cm*cm \n" + 
-            "Materiau eprouvette : " + BD.maListeMateriau.get(choixMat.getSelectedIndex()).Nom
-            + " de resilience : " + BD.maListeMateriau.get(choixMat.getSelectedIndex()).Resilience + " J/cm*cm \n";
-           }
+    
+                if(p.theta.size() >= 2 && p.theta.getLast()>p.theta.get(p.theta.size()-2) && ep.estVivant==true){
+                    p.EprouDetruite=2;
+                }
+    
+                if(p.EprouDetruite==1){
+                    TxtaffichageResultat.setText("L'éprouvette a été détruite");
+                }
+    
+                if(p.EprouDetruite==2){
+                    TxtaffichageResultat.setText("L'éprouvette n'a pas été détruite");
+                }
+            }
         }
-
-        if(p.theta.size() >= 2 && p.theta.getLast()>p.theta.get(p.theta.size()-2) && ep.estVivant==true){
-			p.EprouDetruite=2;
-		}
-
-        if(p.EprouDetruite==1){
-			TxtaffichageResultat.setText("L'éprouvette a été détruite");
-		}
-
-		if(p.EprouDetruite==2){
-			TxtaffichageResultat.setText("L'éprouvette n'a pas été détruite");
-		}
     }
 
     public void ecritureResultat() {
@@ -278,11 +274,11 @@ public class Fenetre extends JFrame implements ActionListener {
             } else {
                 writer.append("L'eprouvette a ete detruite ! \n");
             }
-            writer.append("angleRad;vitesseAngulaire \n");
+            writer.append("temps (ms);angleRad;vitesseAngulaire \n");
 
 
             for (int i = 0; i < p.theta.size(); i++) {
-                writer.append(p.theta.get(i) + ";" + p.omega.get(i)+ "\n");
+                writer.append(i*15 + ";" + p.theta.get(i) + ";" + p.omega.get(i)+ "\n");
             }
 
 
@@ -294,7 +290,7 @@ public class Fenetre extends JFrame implements ActionListener {
         majPendule.doClick();
 
         JOptionPane.showMessageDialog(this,"Simulation terminée ! \n Résultats disponibles dans le dossier output."
-        , "Simulation réussie !", 2);
+        , "Simulation réussie !", 1);
 
 
     }
@@ -302,11 +298,36 @@ public class Fenetre extends JFrame implements ActionListener {
     public void limiteAtteinte() {
         majPendule.doClick();
         resumeSimulation += "!!! Les limites de la simulation ont été atteintes !!! \n Cela peut être du à une vitesse initiale trop grande. \n";
-        JOptionPane.showMessageDialog(this,"Limite de simulation atteinte", "Erreur simulation", 0);
+        JOptionPane.showMessageDialog(this,"Limite de simulation atteinte", "Erreur simulation !", 0);
     }
-    /*
-     * public void degreRadian (){
-     * this.angleInitial = angleInitial*Math.PI/180;
-     * }
-     */
+
+
+    public boolean verifValeur(){
+        try {
+            if(Integer.parseInt(TxtTailleTige.getText()) > 6) {
+                JOptionPane.showMessageDialog(this,"Merci de ne pas dépasser 7m de longueur de tige afin de ne pas sortir de la taille de la fenêtre");
+                return(false);
+        
+            } else if(Double.parseDouble(TxtAngleInitial.getText()) > 175) {
+                JOptionPane.showMessageDialog(this,"Merci de choisir un angle inférieur ou égal à 175° afin de ne pas sortir des limites de la simulation");
+                return(false);
+
+            } else if (Double.parseDouble(TxtAngleInitial.getText()) <= 5){
+                JOptionPane.showMessageDialog(this,"Merci de choisir un angle supérieur à 5° afin de pouvoir lancer la simulation");
+                return(false);
+        
+            } else if(Double.parseDouble(TxtEpaisseurEprouvette.getText()) < 0) {
+                JOptionPane.showMessageDialog(this,"Merci de choisir une épaisseur supérieure ou égale à 0");
+                return(false);
+            } else {
+                return(true);
+            }
+
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(this, "Valeurs saisies incorrectes", "Erreur saisie", 0);
+            return(false);
+        }
+    }
 }
+
+

@@ -24,9 +24,9 @@ public class Pendule {
     int EprouDetruite=0; //0=etat initial 1=detruit 2=non detruit
 
     
-    public Pendule (double uneMasse, int uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Eprouvette ep, Fenetre f) {
+    public Pendule (double uneMasse, double uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Eprouvette ep, Fenetre f) {
         this.masse = uneMasse;
-        this.longueur = uneLongueur * 100;
+        this.longueur = (int)uneLongueur * 100;
         this.longueurReelle = uneLongueur;
         theta.add(unAngleInitial);
         omega.add(uneVitesseInitiale);
