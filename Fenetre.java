@@ -59,7 +59,7 @@ public class Fenetre extends JFrame implements ActionListener {
         chrono = new Timer(1, this);
 	
     
-        BD=new BaseDonneeMateriaux();
+        BD = new BaseDonneeMateriaux(this);
         String[] listeMat = new String[BD.maListeMateriau.size()];
         for (int i = 0; i < listeMat.length; i++) {
             listeMat[i] = BD.maListeMateriau.get(i).Nom;
@@ -229,7 +229,6 @@ public class Fenetre extends JFrame implements ActionListener {
                 monConteneur2.maj(p, ep);
                 lancement.setBackground(Color.red);
                 repaint();
-                p.EprouDetruite=0;
                 TxtaffichageResultat.setText(MessageInitial);
    
                 resumeSimulation ="*** Compte-rendu de la simulation *** \n" +
@@ -243,18 +242,6 @@ public class Fenetre extends JFrame implements ActionListener {
                 "Materiau eprouvette : " + BD.maListeMateriau.get(choixMat.getSelectedIndex()).Nom
                 + " de resilience : " + BD.maListeMateriau.get(choixMat.getSelectedIndex()).Resilience + " J/cm*cm \n";
             
-    
-                if(p.theta.size() >= 2 && p.theta.getLast()>p.theta.get(p.theta.size()-2) && ep.estVivant==true){
-                    p.EprouDetruite=2;
-                }
-    
-                if(p.EprouDetruite==1){
-                    TxtaffichageResultat.setText("L'éprouvette a été détruite");
-                }
-    
-                if(p.EprouDetruite==2){
-                    TxtaffichageResultat.setText("L'éprouvette n'a pas été détruite");
-                }
             }
         }
     }
