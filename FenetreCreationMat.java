@@ -28,8 +28,8 @@ public class FenetreCreationMat extends JFrame implements ActionListener {
     public JTextField txtRes;
 
     // Autres
-    ArrayList<Materiau> bdMat;
-    Fenetre f;
+    JComboBox<String> comboBox;
+    ArrayList<Materiau> maListeMateriau;
     Color couleur;
 
     
@@ -37,20 +37,22 @@ public class FenetreCreationMat extends JFrame implements ActionListener {
      * Constructeur de la classe affichant la fenetre de création d'un matériau
      * @param la fenetre d'affichage principale
      */  
-    public FenetreCreationMat(Fenetre f) {
+    public FenetreCreationMat(ArrayList<Materiau> maListeMateriau, JComboBox<String> comboBox) {
 
         // Paramètre de la fenêtre
         super("Création Matériau");
-        setSize(330, 350);
+        setSize(330, 320);
         setLocation(500, 200);
 
-        this.f = f;
+        this.maListeMateriau = maListeMateriau;
+        this.comboBox = comboBox;
 
         // Initialisation des conteneurs
 
         // Conteneur principal
         conteneurMain = new JPanel();
         conteneurMain.setLayout(null);
+        conteneurMain.setBackground(Color.lightGray);
 
         // Conteneur affichant la couleur choisie
         conteneurCouleur = new JPanel();
@@ -63,13 +65,13 @@ public class FenetreCreationMat extends JFrame implements ActionListener {
 
         // Bouton ouvrant le JChooseColor
         boutonChoixCouleur = new JButton("Choisir une couleur");
-        boutonChoixCouleur.setBounds(20, 150, 120, 40);
+        boutonChoixCouleur.setBounds(5, 150, 150, 40);
         boutonChoixCouleur.addActionListener(this);
         conteneurMain.add(boutonChoixCouleur);
 
         // Bouton de création du matériau
         boutonCreation = new JButton("Créer !");
-        boutonCreation.setBounds(105, 250, 120, 40);
+        boutonCreation.setBounds(90, 220, 120, 40);
         boutonCreation.addActionListener(this);
         conteneurMain.add(boutonCreation);
 
@@ -77,20 +79,20 @@ public class FenetreCreationMat extends JFrame implements ActionListener {
 
         // Zone de saisie du nom
         nom = new JLabel("Nom : ");
-        nom.setBounds(20, 10, 120, 30);
+        nom.setBounds(5, 10, 120, 30);
         conteneurMain.add(nom);
 
         txtNom = new JTextField();
-        txtNom.setBounds(20, 50, 120, 60);
+        txtNom.setBounds(5, 50, 150, 60);
         conteneurMain.add(txtNom);
 
         // Zone de saisie de la résilience
         resilience = new JLabel("Résilience : ");
-        resilience.setBounds(190, 10, 120, 30);
+        resilience.setBounds(160, 10, 150, 30);
         conteneurMain.add(resilience);
 
         txtRes = new JTextField();
-        txtRes.setBounds(190, 50, 120, 60);
+        txtRes.setBounds(160, 50, 150, 60);
         conteneurMain.add(txtRes);
 
         this.add(conteneurMain);
@@ -132,7 +134,8 @@ public class FenetreCreationMat extends JFrame implements ActionListener {
                 // Ecriture des valeurs dans le fichier texte
                 writer.write("\r" + txtNom.getText() + "," + txtRes.getText() + "," + couleur.getRed() 
                 + "," + couleur.getGreen() + "," + couleur.getBlue() + "," + couleur.getAlpha());
-                f.initListeMateriau();
+                maListeMateriau.add(new Materiau(txtNom.getText(), Double.parseDouble(txtRes.getText()), couleur));
+                comboBox.addItem(txtNom.getText());
                 JOptionPane.showMessageDialog(this, "Le matériau a bien été créé \n un redémarrage peut être nécéssaire", "Opération réussie !", 2);
                 this.dispose(); // Fermeture de la fenêtre
 

@@ -76,16 +76,17 @@ public class Fenetre extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        chrono = new Timer(1, this);
+        // Initialisation de la base de donnée des matériauxs
         maListeMateriau = new ArrayList<Materiau>();
         initListeMateriau();
         choixMat = new JComboBox<String>(listeMat);
         choixMat.setBounds(160, 640, 120, 50);
         choixMat.addActionListener(this);
-        monConteneur1.add(choixMat);
+  
+        // Initialisation quelques variables
         this.ep = new Eprouvette(maListeMateriau.get(0), 100, 500);
         this.p = new Pendule(1.0, 5, 0, 0, 0, ep);
-
+        chrono = new Timer(1, this);
 
         // Initialisation des conteneurs
 
@@ -214,6 +215,8 @@ public class Fenetre extends JFrame implements ActionListener {
         CoefFrottements.setPaintTicks(true);
         CoefFrottements.setPaintLabels(true);
 
+        monConteneur1.add(choixMat);
+
         // Affichage de la fenêtre
         setVisible(true);
     }
@@ -328,7 +331,7 @@ public class Fenetre extends JFrame implements ActionListener {
         // Ouverture de la fenêtre de création d'un matériau
         if(e.getSource() == creationMat) {
 
-            FenetreCreationMat fcreation = new FenetreCreationMat(this);
+            FenetreCreationMat fcreation = new FenetreCreationMat(maListeMateriau, choixMat);
 
         }
 
@@ -440,6 +443,7 @@ public class Fenetre extends JFrame implements ActionListener {
         }
     }
 
+
     /**
      * Permet d'initialiser la liste des matériaux à partir du fichier BDMat.txt
      */  
@@ -447,22 +451,23 @@ public class Fenetre extends JFrame implements ActionListener {
 
         // Obligatoire pour le BufferedReader
         try {
-
+            
             // Permet de lire le fichier texte
             BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream("BDMat.txt")));
-
+  
             // Ici on va lire ligne par ligne le fichier texte en séparant les données grâce aux virgules
             String ligne;
             final String SEPARATEUR = ",";
+
             while((ligne = input.readLine()) != null) {
 
                 String attributs[] = ligne.split(SEPARATEUR);
                 double res = Double.parseDouble(attributs[1]);
-                Color c = new Color(Integer.parseInt(attributs[2]), Integer.parseInt(attributs[3]), Integer.parseInt(attributs[4]));
+                Color c = new Color(Integer.parseInt(attributs[2]), Integer.parseInt(attributs[3])
+                , Integer.parseInt(attributs[4]), Integer.parseInt(attributs[5]));
                 maListeMateriau.add(new Materiau(attributs[0], res, c));
 
             }
-            
                 // Liste d'affichage pour la JComboBox
                 listeMat = new String[maListeMateriau.size()];
                 for (int i = 0; i < listeMat.length; i++) {
