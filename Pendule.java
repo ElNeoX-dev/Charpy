@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.*;
-import javax.swing.*;
 
 public class Pendule {
 
@@ -20,11 +19,9 @@ public class Pendule {
     int finY;
     double energieCinetique;
     Eprouvette ep;
-    Fenetre f;
-    int EprouDetruite=0; //0=etat initial 1=detruit 2=non detruit
 
     
-    public Pendule (double uneMasse, double uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Eprouvette ep, Fenetre f) {
+    public Pendule (double uneMasse, double uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Eprouvette ep) {
         this.masse = uneMasse;
         this.longueur = (int)uneLongueur * 100;
         this.longueurReelle = uneLongueur;
@@ -33,7 +30,6 @@ public class Pendule {
         this.ep = ep;
         largeur = longueur / 10;
         this.frottements = unFrottement;
-        this.f = f;
     }
 
     public void resetPendule(double uneMasse, int uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Eprouvette ep) {
@@ -55,7 +51,6 @@ public class Pendule {
         centreY = 100;
         finX = (int) (centreX + longueur * Math.sin(theta.getLast()));
         finY = (int) (centreY + longueur * Math.cos(theta.getLast()));
-        int r = largeur / 2;
         tabX[0] = centreX - longueur * (int)Math.cos(theta.getLast());
         theta.add(theta.getLast() + 0.015 * omega.getLast());
         omega.add(omega.getLast() + 0.015 * (-longueurReelle*Math.sin(theta.get(theta.size() - 2) / 9.81 + frottements * omega.getLast())));
@@ -63,45 +58,38 @@ public class Pendule {
         g.drawLine(centreX, centreY, finX, finY);
         g.setColor(Color.red);
         g.fillOval(finX - largeur, finY - largeur, 2 * largeur, 2 * largeur);
-        //tabX[0] = centreX - r*Math.cos(angle);
         majEnergie();
-        testCollision();
-        testLimite();
-        testFinSimulation();
- 
      }
 
      public void majEnergie() {
          this.energieCinetique = 1.0/2.0 * this.masse * Math.pow(this.longueurReelle * omega.getLast(), 2);
      }
 
-     public void testCollision() {
+     public boolean testCollision() {
         if((ep.estVivant && theta.getLast() <= 0)  && (energieCinetique < ep.unMateriau.Resilience*ep.section)) {
             energieCinetique *= 0.2;
             theta.add(0.001);
             omega.add(Math.sqrt(2 * energieCinetique / this.masse) / this.longueurReelle);
+            return(true);
             
         } else if(ep.estVivant && (energieCinetique > ep.unMateriau.Resilience*ep.section) && (theta.getLast() <= 0)) {
             energieCinetique-= ep.unMateriau.Resilience*ep.section;
             omega.add(- Math.sqrt(2 * energieCinetique / this.masse) / this.longueurReelle);
             ep.estVivant = false;
-            EprouDetruite=1;
+            return(true);
+        } else {
+            return(false);
         }
 
 
      }
 
-     public void testLimite() {
-         if(Math.abs(theta.getLast()) > 3.12) {
-            f.limiteAtteinte();
-         }
+     public boolean testLimite() {
+        return(Math.abs(theta.getLast()) > 3.12);
      }
 
-     public void testFinSimulation() {
-         if(Math.abs(theta.getLast()) < 0.005 && Math.abs(omega.getLast()) < 0.005 
-         && f.lancement.getBackground() == Color.green) {
-             f.ecritureResultat();
-         }
+     public boolean testFinSimulation() {
+         return(Math.abs(theta.getLast()) < 0.005 && Math.abs(omega.getLast()) < 0.005); 
      }
 
      public String toString() {

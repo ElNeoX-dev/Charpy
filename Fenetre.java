@@ -34,10 +34,10 @@ public class Fenetre extends JFrame implements ActionListener {
     private Timer chrono;
     public JButton majPendule;
     public JButton lancement;
+    public JButton creationMat;
 
     public JComboBox<String> choixMat;
     public Eprouvette eprouvette;
-    public BaseDonneeMateriaux BD;
 
     public JSlider CoefFrottements;
 
@@ -47,34 +47,31 @@ public class Fenetre extends JFrame implements ActionListener {
 
     public String resumeSimulation;
 
+    public ArrayList<Materiau> maListeMateriau;
+    String[] listeMat;
+
     public Fenetre() {
         super("Affichage des courbes");
-        //setSize(1800, 1000);
         setLocation(0, 0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //setUndecorated(true);
-
 
         chrono = new Timer(1, this);
-	
-    
-        BD = new BaseDonneeMateriaux(this);
-        String[] listeMat = new String[BD.maListeMateriau.size()];
-        for (int i = 0; i < listeMat.length; i++) {
-            listeMat[i] = BD.maListeMateriau.get(i).Nom;
-        }
-
-        choixMat = new JComboBox<String>(listeMat);
-        choixMat.setBounds(20, 720, 120, 50);
 
 
-        this.ep = new Eprouvette(BD.maListeMateriau.get(0), 100, 500);
-        this.p = new Pendule(1.0, 5, 0, 0, 0, ep, this);
 
         // conteneurs
         monConteneur1 = new JPanel();
         monConteneur1.setLayout(null);
+
+        maListeMateriau = new ArrayList<Materiau>();
+        initListeMateriau();
+        choixMat = new JComboBox<String>(listeMat);
+        choixMat.setBounds(160, 640, 120, 50);
+        monConteneur1.add(choixMat);
+        choixMat.addActionListener(this);
+        this.ep = new Eprouvette(maListeMateriau.get(0), 100, 500);
+        this.p = new Pendule(1.0, 5, 0, 0, 0, ep);
 
         monConteneur2 = new Dessin(p, ep);
         monConteneur2.setLayout(null);
@@ -106,6 +103,11 @@ public class Fenetre extends JFrame implements ActionListener {
         majPendule.setBackground(Color.red);
         majPendule.addActionListener(this);
         monConteneur1.add(majPendule);
+
+        creationMat = new JButton("Créer un materiau");
+        creationMat.setBounds(75, 720, 150, 40);
+        creationMat.addActionListener(this);
+        monConteneur1.add(creationMat);
 
         // TextField + étiquettes
         affichageResultat = new JLabel();
@@ -173,9 +175,6 @@ public class Fenetre extends JFrame implements ActionListener {
         TxtEpaisseurEprouvette.setBackground(Color.white);
         monConteneur1.add(TxtEpaisseurEprouvette);
 
-        monConteneur1.add(choixMat);
-        choixMat.addActionListener(this);
-
         CoefFrottements = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
         CoefFrottements.setBounds(20, 280, 260, 60);
         monConteneur1.add(CoefFrottements);
@@ -198,6 +197,24 @@ public class Fenetre extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == chrono && lancement.getBackground() == Color.green) {
+
+            if(p.testCollision()) {
+                if(ep.estVivant) {
+                    TxtaffichageResultat.setText("l'éprouvette n'a pas été détruite");
+                } else {
+                    TxtaffichageResultat.setText("l'éprouvette a été détruite");
+                }
+            }
+            
+            if(p.testLimite()) {
+                majPendule.doClick();
+                resumeSimulation += "!!! Les limites de la simulation ont été atteintes !!! \n Cela peut être du à une vitesse initiale trop grande. \n";
+                JOptionPane.showMessageDialog(this,"Limite de simulation atteinte", "Erreur simulation !", 0);
+            }
+            
+            if(p.testFinSimulation() && lancement.getBackground() == Color.green) {
+                ecritureResultat();
+            }
             repaint();
         }
 
@@ -219,7 +236,7 @@ public class Fenetre extends JFrame implements ActionListener {
             chrono.stop();
             
             if(verifValeur()) {
-                this.ep = new Eprouvette(BD.maListeMateriau.get(choixMat.getSelectedIndex()), Double.parseDouble(TxtEpaisseurEprouvette.getText()),
+                this.ep = new Eprouvette(maListeMateriau.get(choixMat.getSelectedIndex()), Double.parseDouble(TxtEpaisseurEprouvette.getText()),
                 Double.parseDouble(TxtTailleTige.getText())*100); 
                     
                 p.resetPendule(Double.parseDouble(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
@@ -239,10 +256,14 @@ public class Fenetre extends JFrame implements ActionListener {
                 "Masse marteau = " + TxtMasseMarteau.getText() + " kg\n" +
                 "Coefficient de frottements = " + frottements + "\n" +
                 "Section Eprouvette = " + TxtEpaisseurEprouvette.getText() + " cm*cm \n" + 
-                "Materiau eprouvette : " + BD.maListeMateriau.get(choixMat.getSelectedIndex()).Nom
-                + " de resilience : " + BD.maListeMateriau.get(choixMat.getSelectedIndex()).Resilience + " J/cm*cm \n";
+                "Materiau eprouvette : " + maListeMateriau.get(choixMat.getSelectedIndex()).Nom
+                + " de resilience : " + maListeMateriau.get(choixMat.getSelectedIndex()).Resilience + " J/cm*cm \n";
             
             }
+        }
+
+        if(e.getSource() == creationMat) {
+            FenetreCreationMat fcreation = new FenetreCreationMat(this);
         }
     }
 
@@ -283,9 +304,7 @@ public class Fenetre extends JFrame implements ActionListener {
     }
 
     public void limiteAtteinte() {
-        majPendule.doClick();
-        resumeSimulation += "!!! Les limites de la simulation ont été atteintes !!! \n Cela peut être du à une vitesse initiale trop grande. \n";
-        JOptionPane.showMessageDialog(this,"Limite de simulation atteinte", "Erreur simulation !", 0);
+
     }
 
 
@@ -307,12 +326,42 @@ public class Fenetre extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this,"Merci de choisir une épaisseur supérieure ou égale à 0");
                 return(false);
             } else {
+                Double.parseDouble(TxtVinit.getText());  //Permet de vérifier que la vitesse est un double, sinon envoyé dans le catch
                 return(true);
             }
 
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(this, "Valeurs saisies incorrectes", "Erreur saisie", 0);
             return(false);
+        }
+    }
+
+    public void initListeMateriau() {
+        try {
+            BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream("BDMat.txt")));
+
+            String ligne;
+            final String SEPARATEUR = ",";
+            while((ligne = input.readLine()) != null) {
+
+                String attributs[] = ligne.split(SEPARATEUR);
+                double res = Double.parseDouble(attributs[1]);
+                Color c = new Color(Integer.parseInt(attributs[2]), Integer.parseInt(attributs[3]), Integer.parseInt(attributs[4]));
+
+                maListeMateriau.add(new Materiau(attributs[0], res, c));
+            }
+            
+                listeMat = new String[maListeMateriau.size()];
+                for (int i = 0; i < listeMat.length; i++) {
+                    listeMat[i] = maListeMateriau.get(i).Nom;
+                }
+
+            input.close();
+
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, "Une erreur est présente dans le fichier BDMat.txt\n Veuillez vérifier les données."
+            , "Erreur fichier", 0);
+            this.dispose();
         }
     }
 }
