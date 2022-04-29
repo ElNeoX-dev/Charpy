@@ -1,5 +1,5 @@
 /**
- * Classe permettant l'affichage de la simulation
+ * Classe définissant le type Pendule
  * @author WARIN, CAMPRUBI, BRUSQUE, CHAMPOUILLON
  */ 
 
