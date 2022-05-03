@@ -304,7 +304,7 @@ public class Fenetre extends JFrame implements ActionListener {
                 Double.parseDouble(TxtTailleTige.getText())*100); // Création de la nouvelle éprouvette
                     
                 // Maj du nouveau pendule
-                p.resetPendule(Double.parseDouble(TxtMasseMarteau.getText()), Integer.parseInt(TxtTailleTige.getText()),
+                p.resetPendule(Double.parseDouble(TxtMasseMarteau.getText()), Double.parseDouble(TxtTailleTige.getText()),
                 (Math.PI/180.0) * Double.parseDouble(TxtAngleInitial.getText()), -1 * Double.parseDouble(TxtVinit.getText()), frottements, ep);
    
                 monConteneur2.maj(p, ep);
@@ -353,7 +353,7 @@ public class Fenetre extends JFrame implements ActionListener {
         try { 
 
             // Création du writer
-            PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream("./output/" + nomFichier)));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./output/" + nomFichier, false));
 
             // On écrit le résumé de la simulation
             writer.append(resumeSimulation);
@@ -422,7 +422,7 @@ public class Fenetre extends JFrame implements ActionListener {
 
             if(Integer.parseInt(TxtTailleTige.getText()) > 6) {
 
-                JOptionPane.showMessageDialog(this,"Merci de ne pas dépasser 7m de longueur de tige afin de ne pas sortir de la taille de la fenêtre"
+                JOptionPane.showMessageDialog(this,"Merci de ne pas dépasser 6 m de longueur de tige afin de ne pas sortir de la taille de la fenêtre"
                 , "Erreur saisie données", 0);
                 return(false);
         
