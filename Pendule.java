@@ -53,13 +53,13 @@ public class Pendule {
      * Méthode permettant de mettre à jour les paramètre du pendule
      * @param les nouveaux paramètre du pendule
      */  
-    public void resetPendule(double uneMasse, int uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Eprouvette ep) {
+    public void resetPendule(double uneMasse, double uneLongueur, double unAngleInitial, double uneVitesseInitiale, double unFrottement, Eprouvette ep) {
 
         theta.clear();
         omega.clear();
         this.masse = uneMasse;
-        this.longueur = uneLongueur * 100;
-        this.longueurReelle = longueur / 100.0;
+        this.longueur = (int)uneLongueur * 100;
+        this.longueurReelle = uneLongueur;
         largeur = longueur / 10;
         theta.add(unAngleInitial);
         omega.add(uneVitesseInitiale);
