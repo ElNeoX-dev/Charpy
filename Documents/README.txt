@@ -4,8 +4,8 @@
 ***** A quoi sert le logiciel ? *****
 
 Le simulateur de mouton de Charpy vous permet de simuler les
-caractéristique nécessaire d'un pendule pour permettre de casser
-une eprouvette. Tout comme un véritable mouton de Charpy, vous
+caractéristique nécessaires d'un pendule pour permettre de casser
+une éprouvette. Tout comme un véritable mouton de Charpy, vous
 pourrez simuler la réaction du pendule lorsqu'il casse un pendule.
 
 Le logiciel permet également de créer ses propres matériaux grâce à
