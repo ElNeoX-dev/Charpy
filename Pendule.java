@@ -99,7 +99,7 @@ public class Pendule {
      */  
      public void majEnergie() {
 
-         this.energieCinetique = 1.0/2.0 * this.masse * Math.pow(this.longueurReelle * omega.getLast(), 2);
+        this.energieCinetique = 1.0/2.0 * this.masse * Math.pow(this.longueurReelle * omega.getLast(), 2);
 
      }
 

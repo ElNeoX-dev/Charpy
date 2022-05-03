@@ -370,9 +370,26 @@ public class Fenetre extends JFrame implements ActionListener {
             // Cette partie de permet d'écrire l'historique des données de l'angle et de la vitesse angulaire
             // Les données pourront ainsi être traité dans Excel
             writer.append("temps (ms);angleRad;vitesseAngulaire \n");
-            for (int i = 0; i < p.theta.size(); i++) {
 
-                writer.append(i*15 + ";" + p.theta.get(i) + ";" + p.omega.get(i)+ "\n");
+            // Permet d'optimiser l'acquisition des données pour l'écriture
+            Double[] thetaFinal = new Double[p.theta.size()];
+            Double[] omegaFinal = new Double[p.omega.size()];
+
+            int j = 0;
+            for(Double t : p.theta) {
+                thetaFinal[j] = t;
+                j++;
+            }
+
+            j = 0;
+            for(Double o : p.omega) {
+                omegaFinal[j] = o;
+                j++;
+            }
+
+            for (int i = 0; i < thetaFinal.length; i++) {
+
+                writer.append(i * 15 + ";" + thetaFinal[i] + ";" + omegaFinal[i] + "\n");
 
             }
 

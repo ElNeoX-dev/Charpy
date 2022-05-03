@@ -3,7 +3,7 @@
  * @author WARIN, CAMPRUBI, BRUSQUE, CHAMPOUILLON
  */ 
 
-public class Fenetremain {
+public class SimulateurCharpy {
     
     public static void main(String[] args) {
         Fenetre maFenetre = new Fenetre();
