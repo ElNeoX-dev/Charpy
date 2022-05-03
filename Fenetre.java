@@ -283,11 +283,13 @@ public class Fenetre extends JFrame implements ActionListener {
 
                 lancement.setBackground(Color.green);
                 chrono.start();
+                lancement.setText("Pause");
                 
             } else {
 
                 lancement.setBackground(Color.red);
                 chrono.stop();
+                lancement.setText("Lancer");
 
             }
 
@@ -295,7 +297,8 @@ public class Fenetre extends JFrame implements ActionListener {
 
 
         if (e.getSource() == majPendule) {
-
+            
+            majPendule.setBackground(Color.green);
             double frottements = CoefFrottements.getValue() / 1000.0; // Récupération de la valeur du Slider
             chrono.stop();
             if(verifValeur()) {
