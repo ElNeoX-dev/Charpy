@@ -224,7 +224,7 @@ public class Fenetre extends JFrame implements ActionListener {
 
     /**
      * Permet d'activer ou de désactiver le chrono
-     * @param boolean de l'état souhaité du chrono
+     * @param un booleen
      */  
     public void setChrono(boolean etat) {
 
