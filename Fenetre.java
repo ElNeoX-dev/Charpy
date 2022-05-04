@@ -299,6 +299,7 @@ public class Fenetre extends JFrame implements ActionListener {
         if (e.getSource() == majPendule) {
             
             majPendule.setBackground(Color.green);
+            majPendule.setText("Mettre à jour");
             double frottements = CoefFrottements.getValue() / 1000.0; // Récupération de la valeur du Slider
             chrono.stop();
             if(verifValeur()) {
