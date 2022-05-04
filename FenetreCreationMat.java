@@ -136,7 +136,7 @@ public class FenetreCreationMat extends JFrame implements ActionListener {
                 + "," + couleur.getGreen() + "," + couleur.getBlue() + "," + couleur.getAlpha());
                 maListeMateriau.add(new Materiau(txtNom.getText(), Double.parseDouble(txtRes.getText()), couleur));
                 comboBox.addItem(txtNom.getText());
-                JOptionPane.showMessageDialog(this, "Le matériau a bien été créé \n un redémarrage peut être nécéssaire", "Opération réussie !", 2);
+                JOptionPane.showMessageDialog(this, "Le matériau a bien été créé !", "Opération réussie !", 2);
                 this.dispose(); // Fermeture de la fenêtre
 
             }

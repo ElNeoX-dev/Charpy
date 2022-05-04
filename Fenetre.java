@@ -406,12 +406,13 @@ public class Fenetre extends JFrame implements ActionListener {
 
         }
 
-        majPendule.doClick(); // Simule un appui sur le bouton Reset
+
 
         // Message de confirmation que la simulation s'est bien passé
         JOptionPane.showMessageDialog(this,"Simulation terminée ! \n Résultats disponibles dans le dossier output."
         , "Simulation réussie !", 1);
 
+        majPendule.doClick(); // Simule un appui sur le bouton Reset
     }
 
 
@@ -458,7 +459,7 @@ public class Fenetre extends JFrame implements ActionListener {
         // Si le code entre dans cette méthode, c'est qu'une des données ne possède pas le bon type
         } catch(Exception ex) {
 
-            JOptionPane.showMessageDialog(this, "Valeurs saisies incorrectes", "Erreur saisie", 0);
+            JOptionPane.showMessageDialog(this, "Valeurs saisies incorrectes\r Verifiez que les types des données sont corrects !", "Erreur saisie", 0);
             return(false);
 
         }
